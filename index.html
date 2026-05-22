@@ -2200,18 +2200,29 @@
       padding-bottom: 56px;
     }
     .hero-content { padding: 0 22px; }
-    .hero-brand   { font-size: 11px; letter-spacing: 5px; margin-bottom: 6px; }
-    .hero-eyebrow { font-size: 8.5px; letter-spacing: 2.5px; margin-bottom: 16px; }
+    .hero-brand   { font-size: 11px; letter-spacing: 5px; margin-bottom: 6px;
+                    animation-delay: 1.5s; }
+    /* 2. Eyebrow: más contraste + delays reducidos */
+    .hero-eyebrow { font-size: 8.5px; letter-spacing: 2.5px; margin-bottom: 16px;
+                    color: rgba(225,232,242,0.96);
+                    text-shadow: 0 1px 8px rgba(0,0,0,0.60);
+                    animation-delay: 1.7s; }
     .hero-title   { margin-bottom: 16px; }
     .hero-line-1  { font-size: clamp(22px, 5.5vw, 34px); letter-spacing: 2px; }
-    .hero-title .hero-line-3 span { font-size: clamp(42px, 12vw, 72px); letter-spacing: -1px; }
-    .hero-subtitle { font-size: 9px; letter-spacing: 1.2px; line-height: 1.85;
-                     max-width: 270px; margin: 0 auto 22px; }
+    /* 1. EXTRAORDINARIOS: reducido para que quepa completo */
+    .hero-title .hero-line-3 span { font-size: clamp(32px, 9vw, 58px); letter-spacing: -1px; }
+    /* 3. Subtítulo: más contraste */
+    .hero-subtitle { font-size: 9.5px; letter-spacing: 1.2px; line-height: 1.85;
+                     max-width: 270px; margin: 0 auto 22px;
+                     color: rgba(230,236,245,0.97);
+                     text-shadow: 0 1px 5px rgba(0,0,0,0.45); }
     .hero-actions  { flex-direction: column; gap: 10px; align-items: center; width: 100%; }
     .btn-primary   { padding: 16px 28px; font-size: 10px; letter-spacing: 2.5px;
                      width: 100%; max-width: 256px; text-align: center; display: block; }
     .btn-ghost     { font-size: 10px; letter-spacing: 1.5px; padding: 10px 0; }
-    .hero-cta-sub  { font-size: 8.5px; letter-spacing: 3px; margin-top: 12px; }
+    /* 4. CTA sub: delay reducido */
+    .hero-cta-sub  { font-size: 8.5px; letter-spacing: 3px; margin-top: 12px;
+                     animation-delay: 3.6s; }
     .hero-scroll   { display: none; }
     .hero-sparkles { display: none; }
   }
@@ -2219,8 +2230,8 @@
     .hero          { padding-top: 100px; padding-bottom: 44px; }
     .hero-brand    { font-size: 10px; letter-spacing: 4px; }
     .hero-line-1   { font-size: clamp(20px, 5.5vw, 30px); }
-    .hero-title .hero-line-3 span { font-size: clamp(38px, 12vw, 60px); }
-    .hero-subtitle { font-size: 8.5px; max-width: 248px; }
+    .hero-title .hero-line-3 span { font-size: clamp(28px, 8.5vw, 48px); }
+    .hero-subtitle { font-size: 9px; max-width: 248px; }
     .btn-primary   { max-width: 244px; }
   }
 
@@ -3698,7 +3709,8 @@
       setTimeout(nextChar, 200);
     }
 
-    // Start after intro splash fades (reduced timing)
+    // Start after intro splash fades — más rápido en mobile
+    const heroStartDelay = window.innerWidth <= 768 ? 1800 : 3800;
     setTimeout(() => {
       typeSegments(type1, segments, cursor1, () => {
         setTimeout(() => {
@@ -3709,7 +3721,7 @@
           }, 800);
         }, 300);
       });
-    }, 3800);
+    }, heroStartDelay);
   })();
 
   // ═══ FORM HANDLER ═══
