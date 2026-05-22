@@ -2582,6 +2582,33 @@
     .footer-logo { font-size: 15px; letter-spacing: 3px; }
   }
 
+  /* ── CENTRADO DE TÍTULOS Y LABELS EN MOBILE ── */
+  @media (max-width: 768px) {
+
+    /* Labels (flex) → centrar horizontalmente */
+    .showcase-header .section-label,
+    .about > .section-label,
+    .services > .section-label,
+    .experiences-intro .section-label,
+    .venues > .section-label,
+    .contact-info .section-label {
+      justify-content: center;
+    }
+
+    /* Títulos → alinear al centro */
+    .showcase-header .section-title,
+    .about > .section-title,
+    .services > .section-title,
+    .experiences-intro .section-title,
+    .venues > .section-title,
+    .contact-info .section-title {
+      text-align: center;
+    }
+
+    /* Sub-texto de clientes */
+    .venues > .section-sub { text-align: center; }
+  }
+
   </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
