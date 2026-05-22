@@ -1401,17 +1401,30 @@
 
   /* Mobile nav overlay */
   .mobile-nav {
-    display: none;
+    display: flex;
     position: fixed;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
     z-index: 99;
     background: rgba(10,10,10,0.98);
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 28px;
+    /* visibility/opacity en lugar de display para evitar salto lateral */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+    /* GPU layer — corrige position:fixed roto en iOS Safari con overflow-x:hidden */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
   }
-  .mobile-nav.active { display: flex; }
+  .mobile-nav.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
   .mobile-nav a {
     font-family: 'Cormorant Garamond', serif;
     font-size: 32px;
@@ -3491,10 +3504,13 @@
 
   // ═══ MOBILE NAV ═══
   function toggleMobile() {
-    document.getElementById('mobileNav').classList.toggle('active');
+    const nav = document.getElementById('mobileNav');
+    const isOpen = nav.classList.toggle('active');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   }
   function closeMobile() {
     document.getElementById('mobileNav').classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   // ═══ SCROLL REVEAL ═══
