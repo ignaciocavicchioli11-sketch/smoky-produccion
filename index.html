@@ -1,0 +1,4129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMOKY PRODUCCIÓN — Producción de Eventos de Alto Nivel</title>
+<meta name="description" content="Productora integral de eventos de alto nivel en Santiago, Chile. Decoración, shows en vivo, iluminación, sonido, eventos temáticos y corporativos. Mandarin Oriental · Casino Monticello.">
+<meta property="og:title" content="SMOKY PRODUCCIÓN — Producción de Eventos de Alto Nivel">
+<meta property="og:description" content="Productora integral de eventos de alto nivel en Santiago, Chile. Decoración, shows en vivo, iluminación, sonido, construcciones a escala.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+<style>
+  :root {
+    --gold: #D4A843;
+    --gold-light: #EDD06A;
+    --gold-dim: rgba(212,168,67,0.6);
+    --dark: #0A0A0A;
+    --dark-2: #111111;
+    --dark-3: #1A1A1A;
+    --white: #F5F0E8;
+    --white-dim: rgba(245,240,232,0.72);
+    --white-dimmer: rgba(245,240,232,0.52);
+    --border: rgba(212,168,67,0.12);
+    --border-hover: rgba(212,168,67,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ═══ CUSTOM CURSOR (hover devices only) ═══ */
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    a, button, select, input, textarea { cursor: none; }
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.08s, width 0.3s, height 0.3s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(212,168,67,0.45);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width 0.3s, height 0.3s;
+    }
+  }
+  @media (hover: none) {
+    .cursor, .cursor-ring { display: none !important; }
+  }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 26px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.20) 70%, transparent 100%);
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    padding: 16px 60px;
+    background: rgba(10,10,10,0.96);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+  }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-logo-text span {
+    font-weight: 300;
+    color: var(--white-dim);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: #F0F2F5;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.25s;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.70);
+  }
+  .nav-links a:hover { color: #EDD06A; }
+
+  .nav-cta {
+    margin-left: 24px;
+    background: rgba(212,168,67,0.06);
+    border: 1px solid #D4A843;
+    color: #D4A843;
+    padding: 10px 28px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    background: none;
+    border: none;
+    padding: 8px;
+  }
+  .hamburger span {
+    width: 26px;
+    height: 1.5px;
+    background: var(--gold);
+    transition: all 0.3s;
+    display: block;
+  }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 55% at 50% 42%, rgba(212,168,67,0.09) 0%, rgba(140,100,20,0.04) 45%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 50% 120%, rgba(212,168,67,0.10) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 35% at 18% 55%, rgba(212,168,67,0.04) 0%, transparent 55%),
+      linear-gradient(to bottom, #040404 0%, #080808 40%, #0B0900 100%);
+  }
+
+  .smoke-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .smoke-particle {
+    position: absolute;
+    bottom: -100px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%);
+    animation: smokeRise 14s infinite ease-out;
+    filter: blur(40px);
+  }
+  .smoke-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+  .smoke-particle:nth-child(2) { left: 30%; animation-delay: 3s; width: 400px; height: 400px; }
+  .smoke-particle:nth-child(3) { left: 55%; animation-delay: 7s; }
+  .smoke-particle:nth-child(4) { left: 75%; animation-delay: 1.5s; width: 250px; height: 250px; }
+  .smoke-particle:nth-child(5) { left: 90%; animation-delay: 10s; }
+
+  @keyframes smokeRise {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-110vh) scale(2.5); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 20px;
+  }
+  #discoBallCanvas { display:none; }
+  #disco3d { position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden;
+  filter: drop-shadow(0 0 28px rgba(212,168,67,0.22)) drop-shadow(0 0 8px rgba(212,168,67,0.12)); }
+
+  .hero-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 2.5vw, 22px);
+    font-weight: 600;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 1s 4s forwards;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.55);
+  }
+  .hero-brand span { font-weight: 300; color: rgba(220,225,235,0.92); text-shadow: 0 1px 10px rgba(0,0,0,0.55); }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: rgba(220,225,235,0.82);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s 4.2s forwards;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.95), 0 0 30px rgba(0,0,0,0.9);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 40px;
+  }
+
+  .hero-title .hero-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hero-title .hero-line-1 {
+    font-size: clamp(28px, 4.5vw, 52px);
+    letter-spacing: 6px;
+    font-weight: 300;
+    color: rgba(220, 225, 235, 0.95);
+    text-transform: uppercase;
+    min-height: 1.2em;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.99), 0 4px 20px rgba(0,0,0,0.96), 0 8px 50px rgba(0,0,0,0.88), 0 16px 80px rgba(0,0,0,0.75);
+  }
+
+  .hero-title .hero-line-3 {
+    min-height: 1.1em;
+    padding-bottom: 0.15em;
+  }
+
+  .hero-title .hero-line-3 span {
+    display: inline-block;
+    font-size: clamp(56px, 10.5vw, 128px);
+    font-style: italic;
+    color: #F5D97A;
+    letter-spacing: -3px;
+    line-height: 1.0;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: drop-shadow(0 0 0px rgba(212,168,67,0));
+    text-shadow:
+      0 2px 4px rgba(0,0,0,0.98),
+      0 4px 16px rgba(0,0,0,0.95),
+      0 8px 40px rgba(0,0,0,0.90),
+      0 16px 80px rgba(0,0,0,0.80),
+      0 0 60px rgba(245,217,122,0.12);
+  }
+
+  .hero-title .hero-line-3 span.revealed {
+    animation: heroWordReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero-typewriter {
+    display: inline;
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .hero-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    background: var(--gold);
+    margin-left: 4px;
+    vertical-align: text-bottom;
+    animation: cursorBlink 0.6s infinite;
+  }
+  .hero-cursor.hide { animation: cursorFadeOut 0.4s forwards; }
+
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  @keyframes cursorFadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes heroWordReveal {
+    0% { opacity: 0; transform: translateY(30px) scale(0.9); filter: drop-shadow(0 0 0px rgba(212,168,67,0)); }
+    60% { opacity: 1; transform: translateY(-3%) scale(1.02); filter: drop-shadow(0 0 40px rgba(212,168,67,0.4)); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: drop-shadow(0 2px 8px rgba(0,0,0,0.95)) drop-shadow(0 0 30px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(212,168,67,0.2)); }
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(220,225,235,0.92);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 2.0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.60);
+  }
+  .hero-subtitle.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-actions {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .hero-actions.visible { opacity: 1; transform: translateY(0); }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 17px 52px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 8px 32px rgba(212,168,67,0.18);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(212,168,67,0.32);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(220,225,235,0.92);
+    border: none;
+    padding: 16px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+  }
+  .btn-ghost::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: rgba(245,240,232,0.55);
+    transition: width 0.3s, background 0.3s;
+  }
+  .btn-ghost:hover { color: rgba(212,168,67,0.90); }
+  .btn-ghost:hover::after { width: 44px; background: rgba(212,168,67,0.6); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeIn 1s 2s forwards;
+  }
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.55);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.08); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ═══ MARQUEE ═══ */
+  .marquee-section {
+    border-top: 1px solid rgba(212,168,67,0.18);
+    border-bottom: 1px solid rgba(212,168,67,0.18);
+    padding: 16px 0;
+    overflow: hidden;
+    background: transparent;
+    transform: translateZ(0);
+    isolation: isolate;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 45s linear infinite;
+    white-space: nowrap;
+    transform: translate3d(0, 0, 0);
+  }
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(212,168,67,0.75);
+    font-weight: 400;
+    font-style: italic;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 48px;
+    flex-shrink: 0;
+  }
+  .marquee-item::after {
+    content: '·';
+    color: rgba(212,168,67,0.40);
+    font-size: 18px;
+    font-style: normal;
+    margin-left: 48px;
+    line-height: 1;
+  }
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  /* ═══ SECTIONS BASE ═══ */
+  section { padding: 100px 60px; }
+
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #D4A843;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 1;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #D4A843;
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5.5vw, 74px);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    color: rgba(245,240,232,0.96);
+  }
+  .section-title em { font-style: italic; color: #D4A843; }
+
+  .section-desc {
+    font-size: 15px;
+    line-height: 2;
+    color: var(--white-dim);
+    letter-spacing: 0.3px;
+    max-width: 600px;
+  }
+
+  /* ═══ ABOUT / NOSOTROS ═══ */
+  .about { background: var(--dark-2); position: relative; overflow: hidden; padding: 64px 60px; }
+  .about::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 72px;
+    align-items: center;
+    margin-top: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-text p {
+    font-size: 14px;
+    line-height: 1.70;
+    color: rgba(245,240,232,0.78);
+    letter-spacing: 0.2px;
+    margin-bottom: 14px;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .about-stat-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.65);
+    margin-top: 8px;
+  }
+
+  .about-visual {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(212,168,67,0.06);
+    pointer-events: none;
+  }
+  .about-visual-inner {
+    text-align: center;
+    padding: 40px;
+  }
+  .about-visual-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .about-visual-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.65);
+    margin-top: 10px;
+  }
+  .about-visual-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(245,240,232,0.70);
+    margin-top: 24px;
+  }
+
+  /* ═══ SERVICES ═══ */
+  .services { background: var(--dark); position: relative; overflow: hidden; padding: 80px 60px; }
+  .services::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 40px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-card {
+    background: var(--dark);
+    padding: 40px 36px;
+    transition: background 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .service-card:hover { background: var(--dark-3); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: rgba(212,168,67,0.28);
+    line-height: 1;
+    margin-bottom: 20px;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-number { color: rgba(212,168,67,0.15); }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    color: rgba(245,240,232,0.92);
+  }
+
+  .service-desc {
+    font-size: 13px;
+    line-height: 1.60;
+    color: rgba(245,240,232,0.72);
+    letter-spacing: 0.2px;
+  }
+
+  /* ═══ EXPERIENCES ═══ */
+  .experiences { background: var(--dark-2); }
+
+  .experiences-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 96px;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+
+  .experiences-desc {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.72);
+    letter-spacing: 0.2px;
+    max-width: 420px;
+    border-left: 1px solid rgba(212,168,67,0.25);
+    padding-left: 28px;
+  }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .exp-card {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--dark-3);
+    border: 1px solid rgba(212,168,67,0.08);
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .exp-card:hover { border-color: var(--border-hover); transform: scale(1.01); }
+
+  .exp-card-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    transition: transform 0.6s ease;
+  }
+  .exp-card:hover .exp-card-bg { transform: scale(1.1); }
+
+  .exp-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+  }
+
+  .exp-card-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 22px;
+  }
+  .exp-card-tag {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .exp-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  /* ═══ CLIENTS / VENUES ═══ */
+  .venues { background: var(--dark); }
+
+  .venues-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+    margin-top: 72px;
+  }
+
+  .venue-card {
+    position: relative;
+    padding: 44px;
+    border: 1px solid var(--border);
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .venue-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-6px);
+  }
+  .venue-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 44px;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s;
+  }
+  .venue-card:hover::before { width: calc(100% - 88px); }
+
+  .venue-icon {
+    font-size: 30px;
+    margin-bottom: 22px;
+  }
+  .venue-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .venue-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .venue-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--white-dim);
+    letter-spacing: 0.3px;
+  }
+
+  /* ═══ CLIENT LOGOS GRID ═══ */
+  .clients-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    margin-top: 48px;
+  }
+
+  .client-logo-card {
+    text-align: center;
+    padding: 36px 24px;
+    border: 1px solid var(--border);
+    transition: border-color 0.4s, transform 0.4s;
+    position: relative;
+  }
+  .client-logo-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-6px);
+  }
+  .client-logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 24px;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s;
+  }
+  .client-logo-card:hover::before { width: calc(100% - 48px); }
+
+  .client-logo-wrap {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  .client-logo-wrap img {
+    max-height: 90px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1.1);
+    transition: filter 0.3s;
+  }
+  .client-logo-card:hover .client-logo-wrap img {
+    filter: brightness(1.3);
+  }
+  .hca-bg {
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+  }
+
+  .client-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    color: rgba(245,240,232,0.92);
+  }
+  .client-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(212,168,67,0.80);
+    margin-bottom: 16px;
+  }
+  .client-desc {
+    font-size: 13px;
+    line-height: 1.80;
+    color: rgba(245,240,232,0.70);
+    letter-spacing: 0.2px;
+  }
+
+  @media (max-width: 1200px) {
+    .clients-logos-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .clients-logos-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .clients-logos-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ═══ HIGHLIGHT ═══ */
+  .highlight {
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 80px 60px;
+  }
+  .highlight-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3.5vw, 42px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .highlight-quote em { color: var(--gold); }
+  .highlight-attr {
+    margin-top: 28px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--white-dimmer);
+  }
+
+  /* ═══ VIDEO SHOWCASE ═══ */
+  .video-showcase { background: var(--dark); position: relative; overflow: hidden; }
+  .video-showcase::before {
+    content: '';
+    position: absolute;
+    bottom: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .video-card {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .video-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+  }
+
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--dark-3) 0%, var(--dark) 100%);
+    transition: opacity 0.4s;
+  }
+
+  .video-play-btn {
+    width: 64px; height: 64px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+    background: rgba(212,168,67,0.05);
+  }
+  .video-play-btn svg {
+    width: 20px; height: 20px;
+    fill: var(--gold);
+    margin-left: 3px;
+  }
+  .video-card:hover .video-play-btn {
+    background: rgba(212,168,67,0.15);
+    transform: scale(1.1);
+    box-shadow: 0 0 40px rgba(212,168,67,0.2);
+  }
+
+  .video-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .video-card-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 6px;
+  }
+
+  .video-note {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--white-dimmer);
+    font-style: italic;
+  }
+
+  /* ═══ EVENTS LIST ═══ */
+  .events-section { background: var(--dark-2); }
+
+  .events-list { margin-top: 72px; }
+
+  .event-row {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(212,168,67,0.06);
+    transition: all 0.3s;
+    gap: 36px;
+  }
+  .event-row:hover {
+    padding-left: 16px;
+    border-bottom-color: rgba(212,168,67,0.2);
+  }
+
+  .event-client {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .event-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .event-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .event-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white-dimmer);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 4px 12px;
+  }
+
+  /* ═══ GALLERY ═══ */
+  .gallery { background: var(--dark); padding-bottom: 0; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 300px 300px;
+    gap: 3px;
+    margin-top: 48px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    background: var(--dark-3);
+  }
+  .gallery-item:first-child { grid-row: span 2; }
+
+  .gallery-item-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+    transition: transform 0.6s ease;
+    filter: brightness(0.7);
+  }
+  .gallery-item:hover .gallery-item-bg { transform: scale(1.08); filter: brightness(0.85); }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  /* ═══ INSTAGRAM ═══ */
+  .instagram { background: var(--dark-2); text-align: center; }
+  .ig-handle {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    margin-bottom: 52px;
+    color: var(--white-dim);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .ig-handle:hover { color: var(--gold); }
+
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3px;
+  }
+  .ig-item {
+    aspect-ratio: 1;
+    background: var(--dark-3);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    transition: transform 0.3s;
+    border: 1px solid rgba(212,168,67,0.04);
+  }
+  .ig-item:hover { transform: scale(0.97); }
+
+  /* ═══ CONTACT ═══ */
+  .contact {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(212,168,67,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-info > p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.78);
+    margin-bottom: 44px;
+    letter-spacing: 0.2px;
+    max-width: 440px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .contact-item-icon {
+    color: var(--gold);
+    font-size: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .contact-item-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #EDD06A;
+    margin-bottom: 4px;
+  }
+  .contact-item-text {
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    color: rgba(245,240,232,0.82);
+    line-height: 1.8;
+  }
+  .contact-item-text a {
+    color: rgba(245,240,232,0.82);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-item-text a:hover { color: var(--gold); }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-group label {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #EDD06A;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(232,201,122,0.35);
+    padding: 14px 18px;
+    color: rgba(245,240,232,0.95);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    resize: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(245,240,232,0.42);
+    font-weight: 300;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: rgba(232,201,122,0.80);
+    background: rgba(255,255,255,0.09);
+    box-shadow: 0 0 0 1px rgba(232,201,122,0.20);
+  }
+  .form-group select option { background: #111; color: rgba(245,240,232,0.9); }
+  .form-group textarea { min-height: 120px; }
+
+  .btn-submit {
+    background: var(--gold);
+    border: none;
+    color: var(--dark);
+    padding: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 6px;
+  }
+  .btn-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(212,168,67,0.3);
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+    border: 1px solid var(--border);
+  }
+  .form-success.show { display: block; }
+  .form-success-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  .form-success h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .form-success p {
+    font-size: 14px;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.9;
+    letter-spacing: 0.3px;
+  }
+
+  /* ═══ FOOTER ═══ */
+  footer {
+    background: var(--dark-2);
+    padding: 52px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.82);
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .footer-social {
+    display: flex;
+    gap: 16px;
+  }
+  .footer-social a {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(212,168,67,0.30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .footer-social a:hover {
+    border-color: var(--gold);
+    background: rgba(212,168,67,0.05);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(245,240,232,0.62);
+    text-transform: uppercase;
+  }
+
+  /* ═══ SCROLL ANIMATIONS ═══ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 28px; }
+    nav.scrolled { padding: 14px 28px; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 56px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 50px; }
+    .about-visual { aspect-ratio: 16/9; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .venues-grid { grid-template-columns: 1fr 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 240px 240px; }
+    .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+    .ig-grid { grid-template-columns: repeat(3, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; gap: 60px; }
+    .experiences-intro { grid-template-columns: 1fr; gap: 24px; }
+    .event-row { grid-template-columns: 1fr; gap: 10px; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+  }
+
+  /* Mobile nav overlay */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(10,10,10,0.98);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+  }
+  .mobile-nav.active { display: flex; }
+  .mobile-nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 4px;
+    transition: color 0.3s;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .venues-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .ig-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: 1fr; grid-template-rows: repeat(5, 220px); }
+    .gallery-item:first-child { grid-column: auto; grid-row: auto; }
+    .about-stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .about-stat-number { font-size: 36px; }
+  }
+
+  /* ═══ INTRO SPLASH ═══ */
+  .intro-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0A0A0A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 8vh;
+  }
+  .intro-splash.phase-out {
+    animation: introFadeOut 0.5s 0.1s ease-in-out forwards;
+  }
+  .intro-splash.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .intro-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.18) 0%, rgba(212,168,67,0.05) 40%, transparent 70%);
+    filter: blur(80px);
+    opacity: 0;
+    animation: introGlowPulse 1.5s 0.1s forwards;
+  }
+
+  .intro-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .intro-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: introParticleFloat 1.5s ease-out forwards;
+  }
+
+  .intro-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 600;
+    letter-spacing: 16px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+    animation: introLogoIn 0.8s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 0 60px rgba(212,168,67,0.2);
+  }
+  .intro-logo-text span {
+    font-weight: 300;
+    color: var(--white-dim);
+  }
+
+  .intro-line {
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin-top: 28px;
+    opacity: 0;
+    animation: introLineExpand 0.5s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative;
+    z-index: 2;
+  }
+
+  .intro-tagline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(212,168,67,0.7);
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: introTaglineIn 0.5s 0.85s ease-out forwards;
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes introLogoIn {
+    0% { opacity: 0; transform: scale(0.85) translateY(20px); filter: drop-shadow(0 0 0px rgba(212,168,67,0)); }
+    50% { opacity: 1; transform: scale(1.01) translateY(-2px); filter: drop-shadow(0 0 60px rgba(212,168,67,0.25)); }
+    100% { opacity: 1; transform: scale(1) translateY(0); filter: drop-shadow(0 0 30px rgba(212,168,67,0.15)); }
+  }
+
+  @keyframes introGlowPulse {
+    0% { opacity: 0; transform: scale(0.3); }
+    40% { opacity: 1; transform: scale(1.3); }
+    70% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 0.5; transform: scale(1.1); }
+  }
+
+  @keyframes introLineExpand {
+    0% { width: 0; opacity: 0; }
+    100% { width: clamp(250px, 35vw, 420px); opacity: 1; }
+  }
+
+  @keyframes introTaglineIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes introParticleFloat {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    20% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 0; transform: translateY(-200px) scale(0.3); }
+  }
+
+  @keyframes introFadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; pointer-events: none; }
+  }
+
+  /* ═══ EXP CARD CAROUSEL ═══ */
+  .exp-card.has-carousel .exp-card-bg { display: none; }
+  .exp-carousel { position: absolute; inset: 0; }
+  .exp-carousel-slide {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity 0.8s ease;
+  }
+  .exp-carousel-slide.active { opacity: 1; }
+  .exp-carousel-slide img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 8s ease;
+  }
+  .exp-carousel-slide.active img { transform: scale(1.06); }
+  .exp-carousel-dots {
+    position: absolute; bottom: 58px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 5;
+  }
+  .exp-carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(245,240,232,0.52);
+    border: 1px solid rgba(212,168,67,0.3);
+    cursor: pointer; transition: all 0.3s; padding: 0;
+  }
+  .exp-carousel-dot.active {
+    background: var(--gold); border-color: var(--gold);
+    transform: scale(1.3);
+  }
+  .exp-carousel-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px;
+    background: rgba(10,10,10,0.5);
+    border: 1px solid rgba(212,168,67,0.2);
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 5;
+    opacity: 0; transition: opacity 0.3s, background 0.3s;
+    font-size: 16px; padding: 0;
+    font-family: 'Montserrat', sans-serif; line-height: 1;
+  }
+  .exp-card:hover .exp-carousel-nav { opacity: 1; }
+  .exp-carousel-nav:hover { background: rgba(212,168,67,0.15); }
+  .exp-carousel-nav.prev { left: 10px; }
+  .exp-carousel-nav.next { right: 10px; }
+
+  /* ═══ BRASSERIE SHOWCASE ═══ */
+  .brasserie-showcase {
+    background: var(--dark-2);
+    position: relative;
+    overflow: hidden;
+    padding: 100px 5% 80px;
+  }
+  .brasserie-showcase::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,67,0.3), transparent);
+  }
+  .brasserie-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .brasserie-header .section-label {
+    margin-bottom: 16px;
+  }
+  .brasserie-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--cream);
+    font-weight: 300;
+    margin: 0 0 16px;
+  }
+  .brasserie-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .brasserie-header p {
+    color: rgba(245,240,232,0.5);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .brasserie-hero {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+  }
+  .brasserie-hero img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 8s ease;
+  }
+  .brasserie-hero:hover img {
+    transform: scale(1.04);
+  }
+  .brasserie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .brasserie-thumb {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .brasserie-thumb:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+  .brasserie-thumb.active {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .brasserie-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 768px) {
+  }
+  @media (max-width: 480px) {
+  }
+
+
+
+  /* ═══ EVENTOS DESTACADOS + REELS (preview-v4) ═══ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --gold: #D4A843; --dark: #0a0a0a; --dark-2: #111111; --dark-3: #1a1a1a; --cream: #f5f0e8; }
+  body { background: var(--dark); color: #fff; font-family: 'Montserrat', sans-serif; }
+
+  nav {
+    background: rgba(10,10,10,0.97); padding: 18px 60px;
+    display: flex; align-items: center;
+    border-bottom: 1px solid rgba(212,168,67,0.15);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; letter-spacing: 6px; color: var(--gold); }
+  .nav-links { display: flex; gap: 30px; margin-left: auto; }
+  .nav-links a { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+  .nav-links a.active { color: var(--gold); }
+
+  /* ═══ SHOWCASE ═══ */
+  .showcase {
+    background: var(--dark-2);
+    padding: 120px 5% 100px;
+    position: relative;
+  }
+  .showcase::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,67,0.45), transparent);
+  }
+
+  /* Header */
+  .showcase-header { text-align: center; margin-bottom: 40px; }
+  .showcase-header .section-label { justify-content: center; }
+  .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .section-label::before, .section-label::after { content: ''; width: 30px; height: 1px; background: var(--gold); opacity: 0.5; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 300; margin-bottom: 14px; }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .section-sub { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.65); }
+
+  /* TABS DE EVENTOS */
+  .evento-tabs-wrapper {
+    max-width: 1400px;
+    margin: 0 auto 48px;
+  }
+  .evento-tabs-label {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.42);
+    margin-bottom: 14px;
+  }
+  .evento-tabs-label span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .evento-tabs-label span::before,
+  .evento-tabs-label span::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+  }
+  .evento-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .evento-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .evento-tab {
+    padding: 14px 18px;
+    font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(245,240,232,0.68); cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s; white-space: nowrap;
+    font-family: 'Montserrat', sans-serif;
+    background: none;
+    border-top: none; border-left: none; border-right: none;
+    position: relative;
+  }
+  /* Separador vertical entre tabs */
+  .evento-tab + .evento-tab::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 25%; height: 50%;
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .evento-tab:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.03); }
+  .evento-tab.active {
+    color: var(--gold);
+    border-bottom: 3px solid var(--gold);
+    text-shadow: 0 0 20px rgba(212,168,67,0.4);
+  }
+
+  /* PANEL de cada evento */
+  .evento-panel { display: none; max-width: 1200px; margin: 0 auto; }
+  .evento-panel.active { display: block; }
+
+  /* Info del evento */
+  .evento-info {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 28px;
+  }
+  .evento-info-left {}
+  .evento-cliente { font-size: 12.5px; letter-spacing: 4px; text-transform: uppercase; color: rgba(212,168,67,0.85); margin-bottom: 10px; }
+  .evento-nombre { font-family: 'Cormorant Garamond', serif; font-size: 3.0rem; font-weight: 300; line-height: 1.1; color: rgba(245,240,232,0.95); }
+  .evento-nombre em { font-style: italic; color: var(--gold); }
+  .evento-año { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 3px; margin-top: 6px; }
+  .evento-badges { display: none; }
+  .badge { font-size: 9.5px; letter-spacing: 2px; text-transform: uppercase; padding: 5px 12px; font-family: 'Montserrat', sans-serif; }
+  .badge-foto { background: rgba(212,168,67,0.10); color: rgba(212,168,67,0.85); border: 1px solid rgba(212,168,67,0.30); }
+  .badge-video { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+  .badge-reel { background: rgba(180,0,150,0.1); color: #e879f9; border: 1px solid rgba(180,0,150,0.25); }
+
+  /* Imagen principal */
+  .evento-hero-img {
+    width: 100%; aspect-ratio: 3/2;
+    border-radius: 4px; overflow: hidden;
+    margin-bottom: 16px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .evento-hero-img .bg-blur {
+    position: absolute; inset: -20px;
+    width: calc(100% + 40px); height: calc(100% + 40px);
+    object-fit: cover;
+    filter: blur(25px) brightness(0.5) saturate(1.3);
+    z-index: 0;
+  }
+  .evento-hero-img img:not(.bg-blur) {
+    position: relative; z-index: 1;
+    max-width: 100%; max-height: 100%;
+    width: auto; height: 100%;
+    object-fit: contain;
+    transition: transform 8s ease;
+  }
+  .evento-hero-img:hover img:not(.bg-blur) { transform: scale(1.03); }
+
+  /* Placeholder para imagen principal (sin fotos reales aún) */
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .img-placeholder-icon { font-size: 64px; opacity: 0.2; }
+  .img-placeholder-text { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+
+  /* Gradientes de fondo para placeholders */
+  .grad-monti-anonuevo { background: linear-gradient(135deg, #050e1a 0%, #0d2040 40%, #1a3a6a 70%, #2a4a8a 100%); }
+  .grad-enamorados { background: linear-gradient(135deg, #1a0008 0%, #4a0018 50%, #8B0030 100%); }
+  .grad-brasserie { background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 50%, #6B1A7A 100%); }
+  .grad-vendimia-mandarin { background: linear-gradient(135deg, #1a0800 0%, #4a1500 50%, #8B3500 100%); }
+  .grad-vendimia-monti { background: linear-gradient(135deg, #051005 0%, #0d2e0d 50%, #1a4a1a 100%); }
+  .grad-mandarin-anonuevo { background: linear-gradient(135deg, #050520 0%, #0d0d3a 50%, #1a1a60 100%); }
+
+  /* Thumbnails */
+  .evento-thumbs {
+    display: grid;
+    gap: 10px;
+  }
+  .thumbs-6 { grid-template-columns: repeat(6, 1fr); }
+  .thumbs-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .thumb {
+    aspect-ratio: 3/2; border-radius: 3px; overflow: hidden;
+    cursor: pointer; opacity: 0.55; transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative; max-height: 90px;
+  }
+  .thumb:hover { opacity: 0.85; transform: translateY(-2px); }
+  .thumb.active { opacity: 1; box-shadow: 0 0 0 2px var(--gold); }
+  .thumb-inner { width: 100%; height: 100%; }
+
+  /* Thumb con video indicator */
+  .thumb-video::after {
+    content: '▶'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: rgba(255,255,255,0.8);
+    background: rgba(0,0,0,0.3);
+  }
+
+  /* ═══ REELS ═══ */
+  .reels {
+    padding: 100px 5%;
+    background: var(--dark);
+    position: relative;
+  }
+  .reels::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,67,0.2), transparent);
+  }
+  .reels-header { text-align: center; margin-bottom: 48px; }
+
+  .reels-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 1200px; margin: 0 auto; }
+  .reel-card { position: relative; aspect-ratio: 9/16; overflow: hidden; border-radius: 4px; cursor: pointer; }
+  .reel-bg { position: absolute; inset: 0; transition: transform 0.5s; }
+  .reel-card:hover .reel-bg { transform: scale(1.05); }
+  .reel-bg-1 { background: linear-gradient(180deg, #1a0008 0%, #7B0025 55%, #e8003a 100%); }
+  .reel-bg-2 { background: linear-gradient(180deg, #050520 0%, #15155a 55%, #3535bb 100%); }
+  .reel-bg-3 { background: linear-gradient(180deg, #1a0800 0%, #5a1800 55%, #e06000 100%); }
+  .reel-bg-4 { background: linear-gradient(180deg, #050e1a 0%, #0a1e38 55%, #D4A84388 100%); }
+  .reel-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.1) 60%, transparent 100%); z-index: 2; }
+  .reel-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 42px; opacity: 0.12; z-index: 1; }
+  .reel-play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; z-index: 3;
+    transition: all 0.3s;
+  }
+  .reel-card:hover .reel-play { background: rgba(212,168,67,0.2); border-color: rgba(212,168,67,0.5); }
+  .reel-play svg { width: 16px; height: 16px; fill: white; margin-left: 3px; }
+  .reel-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px; z-index: 3; }
+  .reel-tag { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+  .reel-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; }
+
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .evento-hero-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease; }
+  .evento-hero-img:hover img { transform: scale(1.03); }
+
+  /* ── SPARKLES DE LUJO ── */
+  .hero-sparkles { position:absolute; inset:0; z-index:5; pointer-events:none; overflow:hidden; }
+  .hsp { position:absolute; width:4px; height:4px; pointer-events:none; }
+  .hsp::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:100%; height:100%;
+    background:radial-gradient(circle, rgba(255,248,195,1.0) 0%, rgba(245,215,85,0.80) 30%, rgba(220,165,20,0.20) 65%, transparent 100%);
+    border-radius:50%; }
+  .hsp::after { content:''; position:absolute; top:50%; left:50%;
+    width:1px; height:22px;
+    background:linear-gradient(to bottom, transparent 0%, rgba(255,240,160,0.90) 35%, rgba(255,252,200,1.0) 50%, rgba(255,240,160,0.90) 65%, transparent 100%);
+    transform:translate(-50%,-50%);
+    box-shadow: 11px 0 0 -0.5px rgba(255,248,185,0.92); }
+  @keyframes hsp1 { 0%{opacity:0;transform:translate(0,0) scale(0.4)} 15%{opacity:1;transform:translate(-3px,-8px) scale(1)} 80%{opacity:0.8;transform:translate(-6px,-18px) scale(0.85)} 100%{opacity:0;transform:translate(-8px,-28px) scale(0.3)} }
+  @keyframes hsp2 { 0%{opacity:0;transform:translate(0,0) scale(0.3)} 20%{opacity:0.9;transform:translate(5px,-6px) scale(1)} 75%{opacity:0.7;transform:translate(10px,-16px) scale(0.9)} 100%{opacity:0;transform:translate(12px,-26px) scale(0.2)} }
+  @keyframes hsp3 { 0%{opacity:0;transform:translate(0,0) scale(0.5)} 18%{opacity:1;transform:translate(-2px,-10px) scale(1.1)} 72%{opacity:0.6;transform:translate(-5px,-22px) scale(0.8)} 100%{opacity:0;transform:translate(-7px,-34px) scale(0.2)} }
+  @keyframes hsp4 { 0%{opacity:0;transform:translate(0,0) scale(0.3)} 22%{opacity:0.85;transform:translate(8px,-5px) scale(1)} 70%{opacity:0.6;transform:translate(14px,-14px) scale(0.88)} 100%{opacity:0;transform:translate(18px,-24px) scale(0.2)} }
+  @keyframes hsp5 { 0%{opacity:0;transform:translate(0,0) scale(0.4)} 16%{opacity:1;transform:translate(-6px,-7px) scale(1.05)} 78%{opacity:0.5;transform:translate(-12px,-20px) scale(0.82)} 100%{opacity:0;transform:translate(-15px,-32px) scale(0.2)} }
+  @keyframes hsp6 { 0%{opacity:0;transform:translate(0,0) scale(0.35)} 24%{opacity:0.9;transform:translate(3px,-9px) scale(1)} 68%{opacity:0.55;transform:translate(7px,-21px) scale(0.86)} 100%{opacity:0;transform:translate(9px,-33px) scale(0.2)} }
+  @keyframes hsp7 { 0%{opacity:0;transform:translate(0,0) scale(0.45)} 19%{opacity:0.95;transform:translate(-4px,-6px) scale(1.08)} 74%{opacity:0.65;transform:translate(-9px,-17px) scale(0.84)} 100%{opacity:0;transform:translate(-12px,-28px) scale(0.2)} }
+  @keyframes hsp8 { 0%{opacity:0;transform:translate(0,0) scale(0.3)} 21%{opacity:0.88;transform:translate(6px,-8px) scale(1)} 76%{opacity:0.5;transform:translate(11px,-19px) scale(0.87)} 100%{opacity:0;transform:translate(14px,-30px) scale(0.2)} }
+  .hsp-1  { animation:hsp1 3.8s ease-in-out infinite; animation-delay:0.0s; }
+  .hsp-2  { animation:hsp2 4.2s ease-in-out infinite; animation-delay:0.6s; }
+  .hsp-3  { animation:hsp3 3.5s ease-in-out infinite; animation-delay:1.2s; }
+  .hsp-4  { animation:hsp4 4.6s ease-in-out infinite; animation-delay:0.3s; }
+  .hsp-5  { animation:hsp5 3.9s ease-in-out infinite; animation-delay:1.8s; }
+  .hsp-6  { animation:hsp6 4.0s ease-in-out infinite; animation-delay:0.9s; }
+  .hsp-7  { animation:hsp7 4.4s ease-in-out infinite; animation-delay:2.4s; }
+  .hsp-8  { animation:hsp8 3.6s ease-in-out infinite; animation-delay:1.5s; }
+  .hsp-9  { animation:hsp1 4.8s ease-in-out infinite; animation-delay:3.0s; }
+  .hsp-10 { animation:hsp3 3.7s ease-in-out infinite; animation-delay:2.1s; }
+  .hsp-11 { animation:hsp5 4.1s ease-in-out infinite; animation-delay:0.7s; }
+  .hsp-12 { animation:hsp7 3.4s ease-in-out infinite; animation-delay:3.3s; }
+
+  /* ── VIÑETA — oscurece bordes del banner ── */
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background:
+      /* Bordes laterales */
+      linear-gradient(to right,  rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.28) 12%, transparent 30%, transparent 70%, rgba(0,0,0,0.28) 88%, rgba(0,0,0,0.72) 100%),
+      /* Borde superior */
+      linear-gradient(to bottom, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.35) 8%, transparent 22%),
+      /* Borde inferior */
+      linear-gradient(to top,    rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 10%, transparent 28%);
+  }
+
+  /* ── HALO DE PROFUNDIDAD — detrás de la bola ── */
+  .hero-depth {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      /* Oscuridad detrás de la bola — crea separación */
+      radial-gradient(ellipse 52% 58% at 50% 34%,
+        rgba(0,0,0,0)     0%,
+        rgba(0,0,0,0)    28%,
+        rgba(0,0,0,0.18) 48%,
+        rgba(0,0,0,0.42) 68%,
+        rgba(0,0,0,0.62) 84%,
+        rgba(0,0,0,0.78) 100%
+      );
+  }
+
+  /* ── AUTORIDAD ── */
+  .authority {
+    padding: 100px 60px;
+    background: #050504;
+    border-top: 1px solid rgba(212,168,67,0.08);
+    border-bottom: 1px solid rgba(212,168,67,0.08);
+  }
+  .authority-inner { max-width: 1080px; margin: 0 auto; text-align: center; }
+  .authority-eyebrow {
+    font-size: 10.5px; letter-spacing: 7px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.80; margin-bottom: 22px;
+  }
+  .authority-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 44px); font-weight: 300;
+    color: rgba(220,225,235,0.95); line-height: 1.25;
+    margin-bottom: 60px; letter-spacing: -0.3px;
+  }
+  .authority-title em { font-style: italic; color: var(--gold); }
+  .authority-clients {
+    display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 0;
+    border: 1px solid rgba(212,168,67,0.10);
+  }
+  .authority-client {
+    flex: 1; min-width: 180px; padding: 36px 28px;
+    border-right: 1px solid rgba(212,168,67,0.10);
+    text-align: center; transition: background 0.35s;
+  }
+  .authority-client:last-child { border-right: none; }
+  .authority-client:hover { background: rgba(212,168,67,0.03); }
+  .authority-client-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 1.8vw, 24px); font-weight: 600;
+    color: rgba(215,215,208,0.92); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .authority-client-tag {
+    font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: rgba(212,168,67,0.72);
+  }
+  .authority-stats {
+    display: flex; justify-content: center;
+    gap: 64px; flex-wrap: wrap; margin-top: 48px;
+  }
+  .authority-stat { text-align: center; }
+  .authority-stat-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 4.5vw, 58px); font-weight: 300;
+    color: var(--gold); display: block; line-height: 1;
+  }
+  .authority-stat-l {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(212,168,67,0.60); margin-top: 8px; display: block;
+  }
+
+  /* ── PROCESO ── */
+  .process {
+    padding: 100px 60px;
+    background: #070706;
+    border-top: 1px solid rgba(212,168,67,0.08);
+    border-bottom: 1px solid rgba(212,168,67,0.08);
+  }
+  .process-inner { max-width: 1280px; margin: 0 auto; }
+  .process-header { text-align: center; margin-bottom: 56px; }
+  .process-eyebrow {
+    font-size: 10.5px; letter-spacing: 7px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.80; margin-bottom: 18px;
+  }
+  .process-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 3.5vw, 52px); font-weight: 300;
+    color: rgba(220,225,235,0.95);
+  }
+  .process-title em { font-style: italic; color: var(--gold); }
+  .process-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    border: 1px solid rgba(212,168,67,0.10);
+  }
+  @media(max-width:768px){
+    .process-grid { grid-template-columns: repeat(2,1fr); }
+    .authority-client { border-bottom: 1px solid rgba(212,168,67,0.10); }
+  }
+  @media(max-width:480px){ .process-grid { grid-template-columns: 1fr; } }
+  .process-step {
+    padding: 64px 40px; position: relative;
+    border-right: 1px solid rgba(212,168,67,0.10);
+    transition: background 0.35s;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: rgba(212,168,67,0.03); }
+  .process-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; font-weight: 300;
+    color: rgba(212,168,67,0.28); line-height: 1;
+    display: block; margin-bottom: 24px;
+  }
+  .process-step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px; font-weight: 500;
+    color: rgba(218,215,205,0.92); margin-bottom: 12px;
+  }
+  .process-step-desc {
+    font-size: 13.5px; line-height: 1.80;
+    color: rgba(185,180,168,0.68); letter-spacing: 0.2px;
+    margin-top: 12px;
+  }
+  .process-bar {
+    position: absolute; bottom: 0; left: 40px;
+    width: 36px; height: 1px;
+    background: rgba(212,168,67,0.35);
+    transition: width 0.4s ease;
+  }
+  .process-step:hover .process-bar { width: 96px; }
+
+  /* Hero CTA subtext */
+  .hero-cta-sub {
+    font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
+    color: rgba(212,168,67,0.90); margin-top: 24px;
+    opacity: 0; animation: fadeUp 1s 5s forwards;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .hero-cta-sub::before, .hero-cta-sub::after {
+    content: "";
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: rgba(212,168,67,0.50);
+  }
+
+  /* WhatsApp flotante */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+    display: flex; align-items: center; gap: 10px;
+    background: #1DA851; color: rgba(255,255,255,0.92);
+    padding: 11px 18px; border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10.5px; font-weight: 500; letter-spacing: 0.5px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(37,211,102,0.35), 0 2px 8px rgba(0,0,0,0.25);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .wa-float:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(37,211,102,0.45), 0 4px 12px rgba(0,0,0,0.30);
+  }
+  .wa-float svg { flex-shrink: 0; }
+
+  /* CTA intermedio */
+  .cta-band {
+    padding: 72px 60px;
+    text-align: center;
+    border-top: 1px solid rgba(212,168,67,0.08);
+    border-bottom: 1px solid rgba(212,168,67,0.08);
+    background: #060605;
+  }
+  .cta-band-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.8vw, 38px); font-weight: 300;
+    color: rgba(220,225,235,0.90); margin-bottom: 28px;
+  }
+  .cta-band-title em { font-style: italic; color: var(--gold); }
+  .cta-band-btns {
+    display: flex; gap: 32px; justify-content: center;
+    flex-wrap: wrap; align-items: center;
+  }
+  .cta-band-sub {
+    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+    color: rgba(212,168,67,0.88); margin-top: 22px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .cta-band-sub::before, .cta-band-sub::after {
+    content: "";
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: rgba(212,168,67,0.42);
+  }
+  .cta-band-sub::before, .cta-band-sub::after {
+    content: "";
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: rgba(212,168,67,0.40);
+  }
+  
+
+  /* ═══ HERO MOBILE ═══ */
+  @media (max-width: 768px) {
+    .hero {
+      height: auto;
+      min-height: unset;
+      padding-top: 120px;
+      padding-bottom: 56px;
+    }
+    .hero-content { padding: 0 22px; }
+    .hero-brand   { font-size: 11px; letter-spacing: 5px; margin-bottom: 6px; }
+    .hero-eyebrow { font-size: 8.5px; letter-spacing: 2.5px; margin-bottom: 16px; }
+    .hero-title   { margin-bottom: 16px; }
+    .hero-line-1  { font-size: clamp(22px, 5.5vw, 34px); letter-spacing: 2px; }
+    .hero-title .hero-line-3 span { font-size: clamp(42px, 12vw, 72px); letter-spacing: -1px; }
+    .hero-subtitle { font-size: 9px; letter-spacing: 1.2px; line-height: 1.85;
+                     max-width: 270px; margin: 0 auto 22px; }
+    .hero-actions  { flex-direction: column; gap: 10px; align-items: center; width: 100%; }
+    .btn-primary   { padding: 16px 28px; font-size: 10px; letter-spacing: 2.5px;
+                     width: 100%; max-width: 256px; text-align: center; display: block; }
+    .btn-ghost     { font-size: 10px; letter-spacing: 1.5px; padding: 10px 0; }
+    .hero-cta-sub  { font-size: 8.5px; letter-spacing: 3px; margin-top: 12px; }
+    .hero-scroll   { display: none; }
+    .hero-sparkles { display: none; }
+  }
+  @media (max-width: 480px) {
+    .hero          { padding-top: 100px; padding-bottom: 44px; }
+    .hero-brand    { font-size: 10px; letter-spacing: 4px; }
+    .hero-line-1   { font-size: clamp(20px, 5.5vw, 30px); }
+    .hero-title .hero-line-3 span { font-size: clamp(38px, 12vw, 60px); }
+    .hero-subtitle { font-size: 8.5px; max-width: 248px; }
+    .btn-primary   { max-width: 244px; }
+  }
+
+  
+  /* ═══ MOBILE COMPLETO 768px ═══ */
+  @media (max-width: 768px) {
+
+    /* NAV */
+    nav { padding: 16px 20px; }
+    nav.scrolled { padding: 12px 20px; }
+    .hamburger { display: flex; min-width: 44px; min-height: 44px; }
+    .hamburger span { background: #F0F2F5; }
+
+    /* MOBILE NAV OVERLAY */
+    .mobile-nav {
+      background: #080808;
+      padding: 0 32px;
+      justify-content: center;
+    }
+    .mobile-nav::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.6), transparent);
+    }
+    .mobile-nav a {
+      font-size: 34px;
+      letter-spacing: 4px;
+      color: rgba(240,242,245,0.95);
+      padding: 14px 0;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid rgba(212,168,67,0.10);
+    }
+
+    /* SECCIONES — padding reducido */
+    section { padding: 52px 20px; }
+    .about        { padding: 52px 20px; }
+    .services     { padding: 52px 20px; }
+    .process      { padding: 52px 20px; }
+    .showcase     { padding: 60px 20px 52px; }
+    .reels        { padding: 52px 20px; }
+    .experiences  { padding: 52px 20px; }
+    .contact      { padding: 52px 20px; }
+    .highlight    { padding: 52px 20px; }
+    footer        { padding: 40px 20px; gap: 28px; }
+    .cta-band     { padding: 52px 20px; }
+    .marquee-section { padding: 14px 0; }
+
+    /* TÍTULOS */
+    .section-title { font-size: clamp(32px, 8vw, 52px); }
+    .section-label { font-size: 11px; letter-spacing: 3px; }
+
+    /* ABOUT */
+    .about-grid   { grid-template-columns: 1fr; gap: 36px; }
+    .about-visual { aspect-ratio: 16/9; }
+    .about-text p { font-size: 14px; margin-bottom: 10px; }
+    .about-stats  { gap: 20px; margin-top: 24px; }
+
+    /* SERVICIOS */
+    .services-grid { grid-template-columns: 1fr; gap: 0; margin-top: 24px; }
+    .service-card  { padding: 28px 20px;
+                     display: grid;
+                     grid-template-columns: 52px 1fr;
+                     column-gap: 14px;
+                     border-bottom: 1px solid rgba(212,168,67,0.10); }
+    .service-card:last-child { border-bottom: none; }
+    .service-number { font-size: 42px; grid-column: 1; grid-row: 1/3;
+                      align-self: center; margin-bottom: 0; }
+    .service-title  { font-size: 20px; grid-column: 2; }
+    .service-desc   { font-size: 13px; grid-column: 2; }
+
+    /* PROCESO */
+    .process-grid { grid-template-columns: 1fr; }
+    .process-step { padding: 28px 20px; min-height: auto;
+                    border-right: none;
+                    border-bottom: 1px solid rgba(212,168,67,0.10); }
+    .process-step:last-child { border-bottom: none; }
+    .process-n    { font-size: 48px; margin-bottom: 12px; }
+
+    /* SHOWCASE — EVENTOS DESTACADOS */
+    .showcase-header { margin-bottom: 28px; }
+    .evento-tabs { justify-content: flex-start; overflow-x: auto;
+                   -webkit-overflow-scrolling: touch; }
+    .evento-tab  { padding: 12px 14px; font-size: 10px; white-space: nowrap; }
+    .evento-nombre { font-size: 1.8rem; }
+    .evento-hero-img { aspect-ratio: 4/3; }
+    .evento-info { flex-direction: column; gap: 8px; }
+    .thumb { width: 60px; height: 42px; aspect-ratio: unset; max-height: unset; }
+    .thumbs-6 { grid-template-columns: repeat(6, 60px); }
+
+    /* EXPERIENCIAS */
+    .experiences-intro { flex-direction: column; gap: 20px; }
+    .experiences-desc  { border-left: none; padding-left: 0;
+                         border-top: 1px solid rgba(212,168,67,0.20);
+                         padding-top: 20px; font-size: 13px; }
+    .exp-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .exp-card { aspect-ratio: 2/3; }
+    .exp-card-content { padding: 14px 12px; }
+    .exp-card-name { font-size: 17px; }
+
+    /* CLIENTES */
+    .clients-logos-grid { grid-template-columns: 1fr; gap: 0; margin-top: 28px; }
+    .client-logo-card   { padding: 22px 20px;
+                          display: grid;
+                          grid-template-columns: 76px 1fr;
+                          column-gap: 16px;
+                          text-align: left;
+                          border-bottom: 1px solid rgba(212,168,67,0.08); }
+    .client-logo-card:last-child { border-bottom: none; }
+    .client-logo-wrap   { grid-column: 1; grid-row: 1/4;
+                          align-self: center; width: 76px; height: auto; margin: 0; }
+    .client-logo-wrap img { max-height: 48px; max-width: 68px; object-fit: contain; }
+    .client-name  { grid-column: 2; font-size: 18px; margin-bottom: 3px; text-align: left; }
+    .client-sub   { grid-column: 2; font-size: 9px; margin-bottom: 6px; text-align: left; }
+    .client-desc  { grid-column: 2; font-size: 12px; line-height: 1.55; text-align: left; }
+
+    /* CONTACTO */
+    .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+    .contact-details { gap: 0; }
+    .contact-item { padding: 16px 0;
+                    border-bottom: 1px solid rgba(212,168,67,0.08); }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-item-text { font-size: 15px; }
+
+    /* FORMULARIO */
+    .form-row     { grid-template-columns: 1fr; gap: 18px; }
+    .contact-form { gap: 18px; }
+    .form-group label { font-size: 11px; color: #EDD06A; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { padding: 18px 16px; font-size: 16px; min-height: 58px; }
+    .form-group textarea  { min-height: 100px; }
+    .btn-submit  { padding: 20px; font-size: 11px; width: 100%;
+                   background: #D4A843;
+                   box-shadow: 0 4px 20px rgba(212,168,67,0.25); }
+
+    /* CTA BAND */
+    .cta-band-title { font-size: clamp(20px, 5vw, 32px); }
+    .cta-band-btns  { flex-direction: column; align-items: center; gap: 16px; }
+    .btn-primary    { width: 100%; max-width: 280px; text-align: center;
+                      padding: 18px 32px; display: block; }
+
+    /* HIGHLIGHT */
+    .highlight-quote { font-size: clamp(20px, 5.5vw, 30px); }
+
+    /* FOOTER */
+    .footer-logo    { font-size: 18px; letter-spacing: 4px; }
+    .footer-social a { width: 44px; height: 44px; }
+    .footer-copy    { font-size: 10px; }
+
+    /* WA FLOTANTE */
+    .wa-float { bottom: 16px; right: 16px; padding: 12px 16px; font-size: 10px; }
+
+    /* AUTHORITY */
+    .authority-clients { flex-direction: column; }
+    .authority-client  { border-right: none;
+                         border-bottom: 1px solid rgba(212,168,67,0.10); }
+    .authority-stats   { gap: 36px; }
+  }
+
+  /* ═══ MOBILE PEQUEÑO 480px ═══ */
+  @media (max-width: 480px) {
+    section { padding: 44px 16px; }
+    .showcase { padding: 52px 16px 44px; }
+    .cta-band { padding: 44px 16px; }
+    footer    { padding: 36px 16px; }
+    .service-card  { padding: 24px 16px; }
+    .process-step  { padding: 24px 16px; }
+    .client-logo-card { padding: 20px 16px; }
+    .exp-grid { gap: 8px; }
+    .section-title { font-size: clamp(28px, 8vw, 44px); }
+    .wa-float { bottom: 12px; right: 12px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { font-size: 16px; }
+  }
+
+  </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+<div class="intro-splash" id="introSplash">
+  <div class="intro-glow"></div>
+  <div class="intro-particles" id="introParticles"></div>
+  <div class="intro-logo-text">SMOKY <span>PRODUCCIÓN</span></div>
+  <div class="intro-line"></div>
+  <p class="intro-tagline">Producción Integral de Eventos</p>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#nosotros">Nosotros</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#experiencias">Experiencias</a>
+  <a href="#clientes">Clientes</a>
+  
+  
+  <a href="#contacto">Contacto</a>
+</div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-text">SMOKY <span>PRODUCCIÓN</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#experiencias">Experiencias</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Cotizar Evento</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-depth"></div>
+  <canvas id="discoBallCanvas"></canvas>
+  <div id="disco3d"></div>
+  <div class="smoke-container">
+    <div class="smoke-particle"></div>
+    <div class="smoke-particle"></div>
+    <div class="smoke-particle"></div>
+    <div class="smoke-particle"></div>
+    <div class="smoke-particle"></div>
+  </div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <!-- Sparkles de lujo -->
+    <div class="hero-sparkles" aria-hidden="true">
+      <div class="hsp hsp-1"  style="left:12%;  top:38%;"></div>
+      <div class="hsp hsp-2"  style="left:22%;  top:55%;"></div>
+      <div class="hsp hsp-3"  style="left:35%;  top:32%;"></div>
+      <div class="hsp hsp-4"  style="left:48%;  top:62%;"></div>
+      <div class="hsp hsp-5"  style="left:58%;  top:28%;"></div>
+      <div class="hsp hsp-6"  style="left:68%;  top:50%;"></div>
+      <div class="hsp hsp-7"  style="left:78%;  top:40%;"></div>
+      <div class="hsp hsp-8"  style="left:88%;  top:58%;"></div>
+      <div class="hsp hsp-9"  style="left:18%;  top:68%;"></div>
+      <div class="hsp hsp-10" style="left:42%;  top:72%;"></div>
+      <div class="hsp hsp-11" style="left:62%;  top:70%;"></div>
+      <div class="hsp hsp-12" style="left:82%;  top:65%;"></div>
+    </div>
+    <p class="hero-brand">SMOKY <span>PRODUCCIÓN</span></p>
+    <p class="hero-eyebrow">Producción Integral de Eventos — Santiago, Chile</p>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="hero-line hero-line-1"><span class="hero-typewriter" id="heroType1"></span><span class="hero-cursor" id="heroCursor1" style="display:none"></span></span>
+      <span class="hero-line hero-line-3" style="position:relative;z-index:11;"><span id="heroImaginan">Extraordinarios</span></span>
+    </h1>
+    <p class="hero-subtitle" id="heroSubtitle">Producción integral de eventos · Diseño · Espectáculos · Iluminación · Sonido</p>
+    <div class="hero-actions" id="heroActions">
+      <a href="#contacto" class="btn-primary">Cotiza tu evento ahora</a>
+      <a href="https://wa.me/56968473421?text=Hola%2C+quiero+cotizar+un+evento" target="_blank" rel="noopener" class="btn-ghost">Agenda una reunión</a>
+    </div>
+    <p class="hero-cta-sub">Respuesta en menos de 24 horas</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">Producción Integral</div>
+    <div class="marquee-item">Mandarin Oriental</div>
+    <div class="marquee-item">Casino Monticello</div>
+    <div class="marquee-item">Iluminación &amp; Sonido</div>
+    <div class="marquee-item">+10 Años de Experiencia</div>
+    <div class="marquee-item">Shows en Vivo</div>
+    <div class="marquee-item">Eventos Corporativos</div>
+    <div class="marquee-item">Producción Integral</div>
+    <div class="marquee-item">Mandarin Oriental</div>
+    <div class="marquee-item">Casino Monticello</div>
+    <div class="marquee-item">Iluminación &amp; Sonido</div>
+    <div class="marquee-item">+10 Años de Experiencia</div>
+    <div class="marquee-item">Shows en Vivo</div>
+    <div class="marquee-item">Eventos Corporativos</div>
+  </div>
+</div>
+
+<section class="showcase">
+  <div class="showcase-header">
+    <div class="section-label reveal">Eventos Destacados</div>
+    <h2 class="section-title reveal">Experiencias que <em>definen</em> el estándar</h2>
+  </div>
+
+  <!-- TABS -->
+  <div class="evento-tabs-wrapper">
+    <div class="evento-tabs">
+      <div class="evento-tab active" onclick="showEvento('enamorados')">San Valentín</div>
+      <div class="evento-tab" onclick="showEvento('monti-anonuevo')">Año Nuevo Monticello</div>
+      <div class="evento-tab" onclick="showEvento('brasserie')">Brasserie</div>
+      <div class="evento-tab" onclick="showEvento('vendimia-mandarin')">Vendimia Mandarin</div>
+      <div class="evento-tab" onclick="showEvento('vendimia-monti')">Vendimia Monticello</div>
+      <div class="evento-tab" onclick="showEvento('mandarin-anonuevo')">Año Nuevo Mandarin</div>
+    </div>
+  </div>
+
+  <!-- PANEL 1: Enamorados -->
+  <div class="evento-panel active" id="panel-enamorados">
+    <div class="evento-info">
+      <div class="evento-info-left">
+        <p class="evento-cliente">Mandarin Oriental Santiago</p>
+        <h3 class="evento-nombre">San <em>Valentín</em></h3>
+      </div>
+      <div class="evento-badges">
+        <span class="badge badge-foto">Fotos</span>
+        <span class="badge badge-reel">Reels</span>
+      </div>
+    </div>
+    <div class="evento-hero-img">
+      <img src="img/ev_enamorados_05.jpg" alt="San Valentín — Mandarin Oriental" id="enamorados-main">
+    </div>
+    <!-- 7 fotos + 2 reels -->
+    <div class="evento-thumbs" style="grid-template-columns: repeat(9, 1fr);">
+      <div class="thumb active" onclick="enamoradosThumb(0)"><img class="bg-blur" src="img/ev_enamorados_05.jpg" alt="">
+      <img src="img/ev_enamorados_05.jpg" alt="" ></div>
+      <div class="thumb" onclick="enamoradosThumb(1)"><img class="bg-blur" src="img/ev_enamorados_01.jpg" alt="">
+      <img src="img/ev_enamorados_01.jpg" alt="" ></div>
+      <div class="thumb" onclick="enamoradosThumb(2)"><img class="bg-blur" src="img/ev_enamorados_02.jpg" alt="">
+      <img src="img/ev_enamorados_02.jpg" alt="" ></div>
+      <div class="thumb" onclick="enamoradosThumb(3)"><img class="bg-blur" src="img/ev_enamorados_03.jpg" alt="">
+      <img src="img/ev_enamorados_03.jpg" alt="" ></div>
+      <div class="thumb" onclick="enamoradosThumb(4)"><img class="bg-blur" src="img/ev_enamorados_04.jpg" alt="">
+      <img src="img/ev_enamorados_04.jpg" alt="" ></div>
+      <div class="thumb" onclick="enamoradosThumb(5)"><img class="bg-blur" src="img/ev_enamorados_06.jpg" alt="">
+      <img src="img/ev_enamorados_06.jpg" alt="" ></div>
+      <div class="thumb" onclick="enamoradosThumb(6)"><img class="bg-blur" src="img/ev_enamorados_07.jpg" alt="">
+      <img src="img/ev_enamorados_07.jpg" alt="" ></div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/shorts/PfMU_6npjAA','_blank')" style="position:relative;">
+        <img src="img/ev_enamorados_05.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Reel 1</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/shorts/XxRSTRH7Qy8','_blank')" style="position:relative;">
+        <img src="img/ev_enamorados_07.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Reel 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 2: Año Nuevo Monticello -->
+  <div class="evento-panel" id="panel-monti-anonuevo">
+    <div class="evento-info">
+      <div class="evento-info-left">
+        <p class="evento-cliente">Casino Monticello</p>
+        <h3 class="evento-nombre">Año Nuevo <em>2026</em></h3>
+      </div>
+      <div class="evento-badges">
+        <span class="badge badge-foto">Fotos</span>
+        <span class="badge badge-video">Video</span>
+      </div>
+    </div>
+    <!-- Hero: primera foto por defecto -->
+    <div class="evento-hero-img" id="monti-hero" style="aspect-ratio:3/2;">
+      <img src="img/ev_monti_anonuevo_05.jpg" style="width:100%;height:100%;object-fit:cover;" alt="Año Nuevo Monticello 2026">
+    </div>
+    <!-- Thumbnails: 5 fotos + video al final -->
+    <div class="evento-thumbs" style="grid-template-columns: repeat(6, 1fr);">
+      <div class="thumb active" onclick="montiThumb(0)"><img class="bg-blur" src="img/ev_monti_anonuevo_05.jpg" alt=""><img src="img/ev_monti_anonuevo_05.jpg" alt=""></div>
+      <div class="thumb" onclick="montiThumb(1)"><img class="bg-blur" src="img/ev_monti_anonuevo_03.jpg" alt=""><img src="img/ev_monti_anonuevo_03.jpg" alt=""></div>
+      <div class="thumb" onclick="montiThumb(2)"><img class="bg-blur" src="img/ev_monti_anonuevo_04.jpg" alt=""><img src="img/ev_monti_anonuevo_04.jpg" alt=""></div>
+      <div class="thumb" onclick="montiThumb(3)"><img class="bg-blur" src="img/ev_monti_anonuevo_06.jpg" alt=""><img src="img/ev_monti_anonuevo_06.jpg" alt=""></div>
+      <div class="thumb" onclick="montiThumb(4)"><img class="bg-blur" src="img/ev_monti_anonuevo_07.jpg" alt=""><img src="img/ev_monti_anonuevo_07.jpg" alt=""></div>
+      <div class="thumb" onclick="montiShowVideo()">
+        <img src="img/ev_monti_anonuevo_05.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 3: Brasserie -->
+  <div class="evento-panel" id="panel-brasserie">
+    <div class="evento-info">
+      <div class="evento-info-left">
+        <p class="evento-cliente">Casino Monticello</p>
+        <h3 class="evento-nombre">Inauguración <em>Brasserie</em> Yann Yvin</h3>
+      </div>
+      <div class="evento-badges">
+        <span class="badge badge-foto">Fotos</span>
+      </div>
+    </div>
+    <div class="evento-hero-img" id="brasserie-hero-img">
+      <img src="img/ev_brasserie_01.jpg" alt="Brasserie Yann Yvin" id="brasserie-main">
+    </div>
+    <div class="evento-thumbs thumbs-6">
+      <div class="thumb active" onclick="brasserieThumb(0)"><img class="bg-blur" src="img/ev_brasserie_01.jpg" alt="">
+      <img src="img/ev_brasserie_01.jpg" alt="" ></div>
+      <div class="thumb" onclick="brasserieThumb(1)"><img class="bg-blur" src="img/ev_brasserie_02.jpg" alt="">
+      <img src="img/ev_brasserie_02.jpg" alt="" ></div>
+      <div class="thumb" onclick="brasserieThumb(2)"><img class="bg-blur" src="img/ev_brasserie_03.jpg" alt="">
+      <img src="img/ev_brasserie_03.jpg" alt="" ></div>
+      <div class="thumb" onclick="brasserieThumb(3)"><img class="bg-blur" src="img/ev_brasserie_04.jpg" alt="">
+      <img src="img/ev_brasserie_04.jpg" alt="" ></div>
+      <div class="thumb" onclick="brasserieThumb(4)"><img class="bg-blur" src="img/ev_brasserie_05.jpg" alt="">
+      <img src="img/ev_brasserie_05.jpg" alt="" ></div>
+      <div class="thumb" onclick="brasserieThumb(5)"><img class="bg-blur" src="img/ev_brasserie_06.jpg" alt="">
+      <img src="img/ev_brasserie_06.jpg" alt="" ></div>
+    </div>
+  </div>
+
+  <!-- PANEL 4: Vendimia Mandarin -->
+  <div class="evento-panel" id="panel-vendimia-mandarin">
+    <div class="evento-info">
+      <div class="evento-info-left">
+        <p class="evento-cliente">Mandarin Oriental Santiago</p>
+        <h3 class="evento-nombre"><em>Vendimia</em> 2025</h3>
+      </div>
+      <div class="evento-badges">
+        <span class="badge badge-foto">Fotos</span>
+        <span class="badge badge-video">Video</span>
+        <span class="badge badge-reel">Reels</span>
+      </div>
+    </div>
+    <div class="evento-hero-img">
+      <img src="img/ev_vendimia_mandarin_06.jpg" alt="Vendimia Mandarin Oriental 2025" id="vendimia-mandarin-main">
+    </div>
+    <div class="evento-thumbs" style="grid-template-columns: repeat(10, 1fr);">
+      <div class="thumb active" onclick="vendimiaMandarinThumb(0)"><img class="bg-blur" src="img/ev_vendimia_mandarin_06.jpg" alt="">
+      <img src="img/ev_vendimia_mandarin_06.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMandarinThumb(1)"><img class="bg-blur" src="img/ev_vendimia_mandarin_01.jpg" alt="">
+      <img src="img/ev_vendimia_mandarin_01.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMandarinThumb(2)"><img class="bg-blur" src="img/ev_vendimia_mandarin_02.jpg" alt="">
+      <img src="img/ev_vendimia_mandarin_02.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMandarinThumb(3)"><img class="bg-blur" src="img/ev_vendimia_mandarin_03.jpg" alt="">
+      <img src="img/ev_vendimia_mandarin_03.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMandarinThumb(4)"><img class="bg-blur" src="img/ev_vendimia_mandarin_04.jpg" alt="">
+      <img src="img/ev_vendimia_mandarin_04.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMandarinThumb(5)"><img class="bg-blur" src="img/ev_vendimia_mandarin_05.jpg" alt="">
+      <img src="img/ev_vendimia_mandarin_05.jpg" alt="" ></div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/watch?v=75eNRaCMGuo','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_mandarin_06.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video 1</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/watch?v=XrTnJ-kAFAQ','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_mandarin_06.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video 2</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/watch?v=QHm3TMWe484','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_mandarin_06.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video 3</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/shorts/HRPynYdvyoM','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_mandarin_06.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Reel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 5: Vendimia Monticello -->
+  <div class="evento-panel" id="panel-vendimia-monti">
+    <div class="evento-info">
+      <div class="evento-info-left">
+        <p class="evento-cliente">Casino Monticello</p>
+        <h3 class="evento-nombre"><em>Vendimia</em> 2025</h3>
+      </div>
+      <div class="evento-badges">
+        <span class="badge badge-foto">Fotos</span>
+        <span class="badge badge-video">Video</span>
+      </div>
+    </div>
+    <div class="evento-hero-img">
+      <img src="img/ev_vendimia_monti_02.jpg" alt="Vendimia Monticello 2025" id="vendimia-monti-main">
+    </div>
+    <div class="evento-thumbs" style="grid-template-columns: repeat(10, 1fr);">
+      <div class="thumb active" onclick="vendimiaMontiThumb(0)"><img class="bg-blur" src="img/ev_vendimia_monti_02.jpg" alt="">
+      <img src="img/ev_vendimia_monti_02.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMontiThumb(1)"><img class="bg-blur" src="img/ev_vendimia_monti_03.jpg" alt="">
+      <img src="img/ev_vendimia_monti_03.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMontiThumb(2)"><img class="bg-blur" src="img/ev_vendimia_monti_04.jpg" alt="">
+      <img src="img/ev_vendimia_monti_04.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMontiThumb(3)"><img class="bg-blur" src="img/ev_vendimia_monti_07.jpg" alt="">
+      <img src="img/ev_vendimia_monti_07.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMontiThumb(4)"><img class="bg-blur" src="img/ev_vendimia_monti_09.jpg" alt="">
+      <img src="img/ev_vendimia_monti_09.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMontiThumb(5)"><img class="bg-blur" src="img/ev_vendimia_monti_08.jpg" alt="">
+      <img src="img/ev_vendimia_monti_08.jpg" alt="" ></div>
+      <div class="thumb" onclick="vendimiaMontiThumb(6)"><img class="bg-blur" src="img/ev_vendimia_monti_06.jpg" alt="">
+      <img src="img/ev_vendimia_monti_06.jpg" alt="" ></div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/watch?v=CbA_uTVn2Tw','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_monti_02.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video 1</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/watch?v=zpqXhhpGVQ4','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_monti_02.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video 2</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/watch?v=E_GMHofBfVQ','_blank')" style="position:relative;">
+        <img src="img/ev_vendimia_monti_02.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Video 3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 6: Año Nuevo Mandarin -->
+  <div class="evento-panel" id="panel-mandarin-anonuevo">
+    <div class="evento-info">
+      <div class="evento-info-left">
+        <p class="evento-cliente">Mandarin Oriental Santiago</p>
+        <h3 class="evento-nombre">Año Nuevo <em>2025 · 2026</em></h3>
+      </div>
+      <div class="evento-badges">
+        <span class="badge badge-foto">Fotos</span>
+        <span class="badge badge-reel">Reels</span>
+      </div>
+    </div>
+    <div class="evento-hero-img">
+      <img src="img/ev_anonuevo_mandarin_00.jpg" alt="Año Nuevo Mandarin Oriental" id="mandarin-anonuevo-main">
+    </div>
+    <div class="evento-thumbs" style="grid-template-columns: repeat(10, 1fr);">
+      <div class="thumb active" onclick="mandarinAnonuevoThumb(0)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_00.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_00.jpg" alt="" ></div>
+      <div class="thumb" onclick="mandarinAnonuevoThumb(1)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_01.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_01.jpg" alt="" ></div>
+      <div class="thumb" onclick="mandarinAnonuevoThumb(2)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_02.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_02.jpg" alt="" ></div>
+      <div class="thumb" onclick="mandarinAnonuevoThumb(3)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_05.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_05.jpg" alt="" ></div>
+      <div class="thumb" onclick="mandarinAnonuevoThumb(4)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_06.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_06.jpg" alt="" ></div>
+      <div class="thumb" onclick="mandarinAnonuevoThumb(5)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_07.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_07.jpg" alt="" ></div>
+      <div class="thumb" onclick="mandarinAnonuevoThumb(6)"><img class="bg-blur" src="img/ev_anonuevo_mandarin_08.jpg" alt="">
+      <img src="img/ev_anonuevo_mandarin_08.jpg" alt="" ></div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/shorts/6MLTXgJUeWo','_blank')" style="position:relative;">
+        <img src="img/ev_anonuevo_mandarin_00.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Reel 1</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/shorts/HT6sxJYwxdI','_blank')" style="position:relative;">
+        <img src="img/ev_anonuevo_mandarin_00.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Reel 2</span>
+        </div>
+      </div>
+      <div class="thumb" onclick="window.open('https://www.youtube.com/shorts/oM1BCNhU2ik','_blank')" style="position:relative;">
+        <img src="img/ev_anonuevo_mandarin_00.jpg" alt="" style="filter:brightness(0.3);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4A843"><polygon points="8,5 20,12 8,19"/></svg>
+          <span style="font-family:'Montserrat',sans-serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.8);">Reel 3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="about" id="nosotros">
+  <div class="section-label reveal">Quiénes somos</div>
+  <h2 class="section-title reveal">Producción integral.<br><em>Estándar sin excusas.</em></h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="reveal"><span style="color:var(--gold);font-weight:500">SMOKY PRODUCCIÓN</span> — empresa chilena especializada en producción integral de eventos. Creatividad, estrategia y ejecución impecable en un solo equipo.</p>
+      <p class="reveal reveal-delay-1">Más de 10 años produciendo para Mandarin Oriental y Casino Monticello. Escenografía, ambientación, iluminación, sonido y shows en vivo — donde la ejecución no admite errores.</p>
+      <p class="reveal reveal-delay-2" style="color:var(--gold); font-style:italic; font-family:'Cormorant Garamond',serif; font-size:18px; line-height:1.6;">No producimos eventos. Creamos experiencias que dejan huella.</p>
+      <div class="about-stats reveal reveal-delay-4">
+        <div>
+          <div class="about-stat-number" data-count="10" data-prefix="+">0</div>
+          <div class="about-stat-label">Años de experiencia</div>
+        </div>
+        <div>
+          <div class="about-stat-number" data-count="200" data-prefix="+">0</div>
+          <div class="about-stat-label">Eventos realizados</div>
+        </div>
+        <div>
+          <div class="about-stat-number" data-count="100" data-suffix="%">0</div>
+          <div class="about-stat-label">Producción integral</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-visual-inner">
+        <div class="about-visual-number about-stat-number" data-count="10" data-prefix="+">0</div>
+        <div class="about-visual-label">Años creando experiencias</div>
+        <div class="about-visual-sub">Mandarin Oriental · Casino Monticello</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="services" id="servicios">
+  <div class="section-label reveal">Qué hacemos</div>
+  <h2 class="section-title reveal">Capacidades de<br><em>producción integral</em></h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-number">01</div>
+      <h3 class="service-title">Diseño & Ambientación</h3>
+      <p class="service-desc">Transformamos cualquier espacio en una experiencia visual de alto impacto.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-number">02</div>
+      <h3 class="service-title">Espectáculos en Vivo</h3>
+      <p class="service-desc">Artistas, bandas y shows de primer nivel integrados a la producción.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-number">03</div>
+      <h3 class="service-title">Iluminación & Sonido</h3>
+      <p class="service-desc">Diseño lumínico y audio profesional para cada escala de evento.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-number">04</div>
+      <h3 class="service-title">Diseño Escenográfico</h3>
+      <p class="service-desc">Construcciones a escala, estructuras temáticas y escenografía personalizada.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-number">05</div>
+      <h3 class="service-title">Activaciones de Marca</h3>
+      <p class="service-desc">Galas, lanzamientos, ferias e inauguraciones con identidad corporativa.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-number">06</div>
+      <h3 class="service-title">Dirección Técnica</h3>
+      <p class="service-desc">Staff, vestuario temático y coordinación completa el día del evento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+
+
+<section class="process">
+  <div class="process-inner">
+    <div class="process-header">
+      <p class="process-eyebrow reveal">Metodología</p>
+      <h2 class="process-title reveal">Cómo <em>trabajamos</em></h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <span class="process-n">01</span>
+        <h3 class="process-step-title">Entendemos el evento</h3>
+        <p class="process-step-desc">Escuchamos cada detalle. Objetivos, audiencia, formato y contexto. Antes de proponer, comprendemos.</p>
+        <div class="process-bar"></div>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <span class="process-n">02</span>
+        <h3 class="process-step-title">Diseñamos la experiencia</h3>
+        <p class="process-step-desc">Creamos el concepto visual y técnico completo. Cada elemento tiene intención. Nada es decorativo sin propósito.</p>
+        <div class="process-bar"></div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <span class="process-n">03</span>
+        <h3 class="process-step-title">Producción integral</h3>
+        <p class="process-step-desc">Coordinamos decoración, iluminación, sonido, shows y logística. Un solo equipo, cero fragmentación.</p>
+        <div class="process-bar"></div>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <span class="process-n">04</span>
+        <h3 class="process-step-title">Ejecución impecable</h3>
+        <p class="process-step-desc">El día del evento no hay improvisación. Solo ejecución precisa del plan. Tu evento funciona. Siempre.</p>
+        <div class="process-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CTA 1 -->
+<div class="cta-band">
+  <p class="cta-band-title">Tu próximo evento merece<br><em>producción de primer nivel.</em></p>
+  <div class="cta-band-btns">
+    <a href="#contacto" class="btn-primary">Cotizar evento</a>
+    <a href="https://wa.me/56968473421?text=Hola%2C+quiero+cotizar+un+evento" target="_blank" rel="noopener" class="btn-ghost">Hablar con nosotros</a>
+  </div>
+  <p class="cta-band-sub">Respuesta en menos de 24 horas</p>
+</div>
+
+
+
+
+
+
+
+<!-- REELS -->
+<section class="reels">
+  <div class="reels-header">
+    <div class="section-label">Momentos</div>
+    <h2 class="section-title">En vivo y en <em>directo</em></h2>
+  </div>
+  <div class="reels-grid">
+    <div class="reel-card" onclick="window.open('https://www.youtube.com/shorts/XxRSTRH7Qy8','_blank')" style="cursor:pointer;">
+      <img class="reel-bg" src="https://img.youtube.com/vi/XxRSTRH7Qy8/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="this.src='https://img.youtube.com/vi/XxRSTRH7Qy8/hqdefault.jpg'">
+      <div class="reel-overlay"></div>
+      <div class="reel-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+      <div class="reel-content"><p class="reel-tag">Mandarin Oriental</p><p class="reel-title">San Valentín 2026</p></div>
+    </div>
+    <div class="reel-card" onclick="window.open('https://www.youtube.com/shorts/6MLTXgJUeWo','_blank')" style="cursor:pointer;">
+      <img class="reel-bg" src="https://img.youtube.com/vi/6MLTXgJUeWo/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="this.src='https://img.youtube.com/vi/6MLTXgJUeWo/hqdefault.jpg'">
+      <div class="reel-overlay"></div>
+      <div class="reel-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+      <div class="reel-content"><p class="reel-tag">Mandarin Oriental</p><p class="reel-title">Año Nuevo 2026</p></div>
+    </div>
+    <div class="reel-card" onclick="window.open('https://www.youtube.com/shorts/eMzw2dJFYkU','_blank')" style="cursor:pointer;">
+      <img class="reel-bg" src="https://img.youtube.com/vi/eMzw2dJFYkU/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="this.src='https://img.youtube.com/vi/eMzw2dJFYkU/hqdefault.jpg'">
+      <div class="reel-overlay"></div>
+      <div class="reel-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+      <div class="reel-content"><p class="reel-tag">Mandarin Oriental</p><p class="reel-title">Vendimia 2025</p></div>
+    </div>
+    <div class="reel-card" onclick="window.open('https://www.youtube.com/shorts/vAd4gYooqdQ','_blank')" style="cursor:pointer;">
+      <img class="reel-bg" src="https://img.youtube.com/vi/vAd4gYooqdQ/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="this.src='https://img.youtube.com/vi/vAd4gYooqdQ/hqdefault.jpg'">
+      <div class="reel-overlay"></div>
+      <div class="reel-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+      <div class="reel-content"><p class="reel-tag">Mandarin Oriental</p><p class="reel-title">Navidad 2025</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="experiences" id="experiencias">
+  <div class="experiences-intro">
+    <div>
+      <div class="section-label reveal">Experiencias</div>
+      <h2 class="section-title reveal">Eventos que dejan<br><em>huella</em></h2>
+    </div>
+    <p class="experiences-desc reveal">No repetimos fórmulas — <em>inventamos mundos.</em><br><br>Cada evento nace de una sola visión creativa que integra ambientación, espectáculo y producción técnica en una experiencia irrepetible.</p>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card has-carousel reveal" role="img" aria-label="Halloween en Casino Monticello">
+      <div class="exp-carousel" id="halloweenCarousel">
+        <div class="exp-carousel-slide active"><img src="img/img_41.jpg" alt="Show Halloween Casino Monticello"></div>
+        <div class="exp-carousel-slide"><img src="img/img_42.jpg" alt="Chucky Halloween Casino Monticello"></div>
+        <div class="exp-carousel-slide"><img src="img/img_43.jpg" alt="Novia muerta Halloween Casino Monticello"></div>
+        <div class="exp-carousel-slide"><img src="img/img_44.jpg" alt="Calabaza Halloween Mandarin Oriental"></div>
+        <button class="exp-carousel-nav prev" onclick="halloweenNav(-1)">&#8249;</button>
+        <button class="exp-carousel-nav next" onclick="halloweenNav(1)">&#8250;</button>
+        <div class="exp-carousel-dots" id="halloweenDots"></div>
+      </div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-content">
+        <p class="exp-card-tag">Terror · Casino Monticello</p>
+        <h3 class="exp-card-name">Halloween</h3>
+      </div>
+    </div>
+    <div class="exp-card has-carousel reveal reveal-delay-1" role="img" aria-label="Torre Eiffel en eventos">
+      <div class="exp-carousel" id="eiffelCarousel">
+        <div class="exp-carousel-slide active"><img src="img/img_35.jpg" alt="Torre Eiffel iluminada en piscina nocturna"></div>
+        <div class="exp-carousel-slide"><img src="img/img_36.jpg" alt="Torre Eiffel acordeonista alfombra roja"></div>
+        <div class="exp-carousel-slide"><img src="img/img_37.jpg" alt="Bailarinas Moulin Rouge Torre Eiffel"></div>
+        <div class="exp-carousel-slide"><img src="img/img_38.jpg" alt="Torre Eiffel flores rosadas boda"></div>
+        <div class="exp-carousel-slide"><img src="img/img_39.jpg" alt="Torre Eiffel rosas rojas Casino Monticello"></div>
+        <div class="exp-carousel-slide"><img src="img/img_40.jpg" alt="Torre Eiffel boinas francesas Casino Monticello"></div>
+        <button class="exp-carousel-nav prev" onclick="eiffelNav(-1)">&#8249;</button>
+        <button class="exp-carousel-nav next" onclick="eiffelNav(1)">&#8250;</button>
+        <div class="exp-carousel-dots" id="eiffelDots"></div>
+      </div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-content">
+        <p class="exp-card-tag">París · Mandarin Oriental · Monticello</p>
+        <h3 class="exp-card-name">Torre Eiffel</h3>
+      </div>
+    </div>
+    <div class="exp-card has-carousel reveal reveal-delay-2" role="img" aria-label="Noche Árabe en Casino Monticello">
+      <div class="exp-carousel" id="arabeCarousel">
+        <div class="exp-carousel-slide active"><img src="img/img_08.jpg" alt="Arco árabe iluminado con flores"></div>
+        <div class="exp-carousel-slide"><img src="img/img_09.jpg" alt="Arco árabe close up"></div>
+        <div class="exp-carousel-slide"><img src="img/img_10.jpg" alt="Performers frente al arco"></div>
+        <div class="exp-carousel-slide"><img src="img/img_11.jpg" alt="Show en vivo con banda"></div>
+        <div class="exp-carousel-slide"><img src="img/img_12.jpg" alt="Bailarina con candelabro"></div>
+        <div class="exp-carousel-slide"><img src="img/img_13.jpg" alt="Ambientación árabe panorámica"></div>
+        <button class="exp-carousel-nav prev" onclick="arabeNav(-1)">&#8249;</button>
+        <button class="exp-carousel-nav next" onclick="arabeNav(1)">&#8250;</button>
+        <div class="exp-carousel-dots" id="arabeDots"></div>
+      </div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-content">
+        <p class="exp-card-tag">Oriente · Casino Monticello</p>
+        <h3 class="exp-card-name">Noche Árabe</h3>
+      </div>
+    </div>
+    <div class="exp-card has-carousel reveal reveal-delay-3" role="img" aria-label="Fiesta Italiana Torre de Pisa en Casino Monticello">
+      <div class="exp-carousel" id="pisaCarousel">
+        <div class="exp-carousel-slide active"><img src="img/img_17.jpg" alt="Torre de Pisa show"></div>
+        <div class="exp-carousel-slide"><img src="img/img_14.jpg" alt="Torre de Pisa evento"></div>
+        <div class="exp-carousel-slide"><img src="img/img_15.jpg" alt="Violinista Torre de Pisa"></div>
+        <div class="exp-carousel-slide"><img src="img/img_16.jpg" alt="Torre de Pisa decoración"></div>
+        <button class="exp-carousel-nav prev" onclick="pisaNav(-1)">&#8249;</button>
+        <button class="exp-carousel-nav next" onclick="pisaNav(1)">&#8250;</button>
+        <div class="exp-carousel-dots" id="pisaDots"></div>
+      </div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-content">
+        <p class="exp-card-tag">Italia · Casino Monticello</p>
+        <h3 class="exp-card-name">Torre de Pisa</h3>
+      </div>
+    </div>
+    <div class="exp-card has-carousel reveal reveal-delay-2" role="img" aria-label="Navidad en Mandarin Oriental">
+      <div class="exp-carousel" id="navidadCarousel">
+        <div class="exp-carousel-slide active"><img src="img/img_19.jpg" alt="Decoración navideña Mandarin Oriental"></div>
+        <div class="exp-carousel-slide"><img src="img/img_20.jpg" alt="Elenco navideño con árbol"></div>
+        <div class="exp-carousel-slide"><img src="img/img_21.jpg" alt="Show navideño en escalera"></div>
+        <div class="exp-carousel-slide"><img src="img/img_22.jpg" alt="Santa Claus en trono"></div>
+        <div class="exp-carousel-slide"><img src="img/img_23.jpg" alt="Elenco navideño exterior"></div>
+        <div class="exp-carousel-slide"><img src="img/img_24.jpg" alt="Personajes navideños"></div>
+        <button class="exp-carousel-nav prev" onclick="navidadNav(-1)">&#8249;</button>
+        <button class="exp-carousel-nav next" onclick="navidadNav(1)">&#8250;</button>
+        <div class="exp-carousel-dots" id="navidadDots"></div>
+      </div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-content">
+        <p class="exp-card-tag">Mandarin Oriental · Gala</p>
+        <h3 class="exp-card-name">Navidad</h3>
+      </div>
+    </div>
+    <div class="exp-card has-carousel reveal reveal-delay-1" role="img" aria-label="Fiestas en Mandarin Oriental y Casino Monticello">
+      <div class="exp-carousel" id="masivasCarousel">
+        <div class="exp-carousel-slide active"><img src="img/img_29.jpg" alt="Fiesta exterior Mandarin Oriental"></div>
+        <div class="exp-carousel-slide"><img src="img/img_30.jpg" alt="Fiesta masiva Casino Monticello"></div>
+        <div class="exp-carousel-slide"><img src="img/img_31.jpg" alt="Show artístico Casino Monticello"></div>
+        <div class="exp-carousel-slide"><img src="img/img_32.jpg" alt="Fiesta temática tropical"></div>
+        <div class="exp-carousel-slide"><img src="img/img_33.jpg" alt="Decoración paraguas coloridos"></div>
+        <div class="exp-carousel-slide"><img src="img/img_34.jpg" alt="Fiesta Torre Eiffel Casino Monticello"></div>
+        <button class="exp-carousel-nav prev" onclick="masivasNav(-1)">&#8249;</button>
+        <button class="exp-carousel-nav next" onclick="masivasNav(1)">&#8250;</button>
+        <div class="exp-carousel-dots" id="masisvasDots"></div>
+      </div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-content">
+        <p class="exp-card-tag">Mandarin Oriental · Casino Monticello</p>
+        <h3 class="exp-card-name">Fiestas</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="venues" id="clientes">
+  <div class="section-label reveal">Confianza comprobada</div>
+  <h2 class="section-title reveal">Clientes que<br><em>confían su nombre</em></h2>
+  <p class="section-sub reveal" style="max-width:620px;margin:16px auto 0;font-size:14px;color:rgba(200,195,185,0.65);letter-spacing:1px;text-align:center;display:block;">Más de 200 eventos. Clientes que vuelven.</p>
+
+  <div class="clients-logos-grid">
+    <div class="client-logo-card reveal">
+      <div class="client-logo-wrap">
+        <img src="img/img_25.png" alt="Mandarin Oriental" loading="lazy">
+      </div>
+      <h3 class="client-name">Mandarin Oriental</h3>
+      <div class="client-sub">Santiago · Cadena Internacional</div>
+      <p class="client-desc">Producción de Año Nuevo, Vendimia, San Valentín y temporadas 2024–2026.</p>
+    </div>
+    <div class="client-logo-card reveal reveal-delay-1">
+      <div class="client-logo-wrap">
+        <img src="img/img_26.png" alt="Casino Monticello" loading="lazy">
+      </div>
+      <h3 class="client-name">Casino Monticello</h3>
+      <div class="client-sub">+10 Años de Alianza</div>
+      <p class="client-desc">Más de 10 años produciendo galas, fiestas temáticas e inauguraciones de primer nivel.</p>
+    </div>
+    <div class="client-logo-card reveal reveal-delay-2">
+      <div class="client-logo-wrap dreams-bg">
+        <img src="img/img_27.png" alt="Casino Dreams" loading="lazy">
+      </div>
+      <h3 class="client-name">Casino Dreams</h3>
+      <div class="client-sub">Cadena de Hoteles, Casinos & Spa</div>
+      <p class="client-desc">Producción de espectáculos para una de las cadenas de entretenimiento más importantes del país.</p>
+    </div>
+    <div class="client-logo-card reveal reveal-delay-3">
+      <div class="client-logo-wrap">
+        <img src="img/img_28.png" alt="HCA Minería" loading="lazy">
+      </div>
+      <h3 class="client-name">HCA Minería</h3>
+      <div class="client-sub">Sector Minero · Expomin</div>
+      <p class="client-desc">Producción corporativa y participación en Expomin, la mayor feria minera de Latinoamérica.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="highlight">
+  <div class="reveal">
+    <p class="highlight-quote">"Cada evento es una oportunidad de hacer algo <em>extraordinario.</em> Nosotros nos aseguramos de que así sea."</p>
+    <p class="highlight-attr">— SMOKY PRODUCCIÓN</p>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="contact" id="contacto">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-label reveal">Contacto</div>
+      <h2 class="section-title reveal">Hablemos de<br>tu <em>próximo evento</em></h2>
+      <p class="reveal">Cuéntanos tu evento. Te respondemos en menos de 24 horas con una propuesta concreta.</p>
+      <div class="contact-details">
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">✦</div>
+          <div>
+            <p class="contact-item-label">WhatsApp</p>
+            <p class="contact-item-text"><a href="https://wa.me/56968473421" target="_blank" rel="noopener">+56 9 6847 3421</a></p>
+          </div>
+        </div>
+        <div class="contact-item reveal reveal-delay-1">
+          <div class="contact-item-icon">✦</div>
+          <div>
+            <p class="contact-item-label">Email</p>
+            <p class="contact-item-text"><a href="mailto:produccion@smokymundo.cl">produccion@smokymundo.cl</a></p>
+          </div>
+        </div>
+        <div class="contact-item reveal reveal-delay-2">
+          <div class="contact-item-icon">✦</div>
+          <div>
+            <p class="contact-item-label">Instagram</p>
+            <p class="contact-item-text"><a href="https://instagram.com/smokyproduccion" target="_blank" rel="noopener">@smokyproduccion</a></p>
+          </div>
+        </div>
+        <div class="contact-item reveal reveal-delay-3">
+          <div class="contact-item-icon">✦</div>
+          <div>
+            <p class="contact-item-label">Ubicación</p>
+            <p class="contact-item-text">Santiago, Chile</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form reveal" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Nombre</label>
+            <input type="text" id="f-name" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="f-company">Empresa</label>
+            <input type="text" id="f-company" placeholder="Nombre empresa">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Teléfono</label>
+            <input type="tel" id="f-phone" placeholder="+56 9 xxxx xxxx">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-type">Tipo de Evento</label>
+          <select id="f-type">
+            <option value="">Selecciona una opción</option>
+            <option>Evento Corporativo</option>
+            <option>Gala / Cena de Gala</option>
+            <option>Activación de Marca</option>
+            <option>Fiesta Temática</option>
+            <option>Año Nuevo / Navidad</option>
+            <option>Decoración Especial</option>
+            <option>Show en Vivo</option>
+            <option>Inauguración</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="f-budget">Presupuesto estimado</label>
+            <select id="f-budget">
+              <option value="">Selecciona rango</option>
+              <option>Menos de $2.000.000</option>
+              <option>$2.000.000 – $5.000.000</option>
+              <option>$5.000.000 – $10.000.000</option>
+              <option>$10.000.000 – $20.000.000</option>
+              <option>Más de $20.000.000</option>
+            </select>
+          </div>
+          
+        <div class="form-group">
+          <label for="f-message">Cuéntanos tu evento</label>
+          <textarea id="f-message" placeholder="Describe tu visión, fecha tentativa, número de invitados, servicios que necesitas..."></textarea>
+        </div>
+        <button class="btn-submit" type="button" id="submitBtn">Cotiza tu evento ahora →</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">✦</div>
+        <h3>Solicitud Enviada</h3>
+        <p>Gracias por contactarnos. Nuestro equipo revisará tu solicitud y te responderá a la brevedad para comenzar a planificar tu evento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SMOKY <span>✦</span> PRODUCCIÓN</div>
+  <div class="footer-social">
+    <a href="https://instagram.com/smokyproduccion" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">📸</a>
+    <a href="https://wa.me/56968473421" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">💬</a>
+    <a href="/cdn-cgi/l/email-protection#03606c6d776260776c43706e6c687a6e766d676c2d606f" title="Email" aria-label="Email">✉️</a>
+  </div>
+  <p class="footer-copy">© <span id="yearCopy"></span> Smoky Producción — Santiago, Chile</p>
+</footer>
+
+<script>
+  // ═══ DYNAMIC YEAR ═══
+  document.getElementById('yearCopy').textContent = new Date().getFullYear();
+
+  // ═══ INTRO SPLASH (faster: ~3.5s total) ═══
+  (function() {
+    const splash = document.getElementById('introSplash');
+    const particlesContainer = document.getElementById('introParticles');
+
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'intro-particle';
+      particle.style.left = (Math.random() * 100) + '%';
+      particle.style.top = (40 + Math.random() * 40) + '%';
+      particle.style.animationDelay = (0.5 + Math.random() * 1.5) + 's';
+      particle.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+      particle.style.width = (2 + Math.random() * 3) + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.background = Math.random() > 0.5
+        ? 'rgba(212,168,67,' + (0.4 + Math.random() * 0.6) + ')'
+        : 'rgba(232,201,122,' + (0.3 + Math.random() * 0.5) + ')';
+      particlesContainer.appendChild(particle);
+    }
+
+    const isMobile = window.innerWidth <= 768;
+    setTimeout(() => { splash.classList.add('phase-out'); }, isMobile ? 800 : 1200);
+    setTimeout(() => { splash.classList.add('hidden'); splash.style.display = 'none'; }, isMobile ? 1400 : 2000);
+  })();
+
+  // ═══ CUSTOM CURSOR (hover devices only) ═══
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+  }
+
+  // ═══ NAV SCROLL ═══
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // ═══ MOBILE NAV ═══
+  function toggleMobile() {
+    document.getElementById('mobileNav').classList.toggle('active');
+  }
+  function closeMobile() {
+    document.getElementById('mobileNav').classList.remove('active');
+  }
+
+  // ═══ SCROLL REVEAL ═══
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ═══ SMOOTH SCROLL LINKS ═══
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id === '#') return;
+      e.preventDefault();
+      closeMobile();
+      document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ═══ HERO TYPEWRITER EFFECT ═══
+  (function() {
+    const segments = [
+      { text: 'Creamos ', gold: false },
+      { text: 'Momentos', gold: true }
+    ];
+    const type1 = document.getElementById('heroType1');
+    const cursor1 = document.getElementById('heroCursor1');
+    const imaginan = document.getElementById('heroImaginan');
+    const charDelay = 75;
+
+    function typeSegments(element, segs, cursor, callback) {
+      cursor.style.display = 'inline-block';
+      let segIndex = 0;
+      let charIndex = 0;
+      let currentSpan = null;
+
+      function nextChar() {
+        if (segIndex >= segs.length) {
+          setTimeout(() => {
+            cursor.classList.add('hide');
+            setTimeout(() => {
+              cursor.style.display = 'none';
+              if (callback) callback();
+            }, 400);
+          }, 300);
+          return;
+        }
+
+        const seg = segs[segIndex];
+
+        if (charIndex === 0) {
+          currentSpan = document.createElement('span');
+          if (seg.gold) {
+            currentSpan.style.color = '#D4A843';
+            currentSpan.style.textShadow = '0 0 20px rgba(212,168,67,0.3)';
+          }
+          element.appendChild(currentSpan);
+        }
+
+        if (charIndex < seg.text.length) {
+          currentSpan.textContent += seg.text.charAt(charIndex);
+          charIndex++;
+          setTimeout(nextChar, charDelay + Math.random() * 40);
+        } else {
+          segIndex++;
+          charIndex = 0;
+          nextChar();
+        }
+      }
+
+      setTimeout(nextChar, 200);
+    }
+
+    // Start after intro splash fades (reduced timing)
+    setTimeout(() => {
+      typeSegments(type1, segments, cursor1, () => {
+        setTimeout(() => {
+          imaginan.classList.add('revealed');
+          setTimeout(() => {
+            document.getElementById('heroSubtitle').classList.add('visible');
+            document.getElementById('heroActions').classList.add('visible');
+          }, 800);
+        }, 300);
+      });
+    }, 3800);
+  })();
+
+  // ═══ FORM HANDLER ═══
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+
+    if (!name || !email) {
+      alert('Por favor completa al menos tu nombre y email.');
+      return;
+    }
+
+    // Build WhatsApp message as fallback
+    const phone = document.getElementById('f-phone').value.trim();
+    const company = document.getElementById('f-company').value.trim();
+    const type = document.getElementById('f-type').value;
+    const message = document.getElementById('f-message').value.trim();
+
+    let waMsg = `Hola SMOKY PRODUCCIÓN, me gustaría cotizar un evento.%0A`;
+    waMsg += `Nombre: ${name}%0A`;
+    if (company) waMsg += `Empresa: ${company}%0A`;
+    waMsg += `Email: ${email}%0A`;
+    if (phone) waMsg += `Teléfono: ${phone}%0A`;
+    if (type) waMsg += `Tipo: ${type}%0A`;
+    if (message) waMsg += `Detalle: ${message}`;
+
+    // Show success state
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+
+    // Open WhatsApp with message
+    setTimeout(() => {
+      window.open(`https://wa.me/56968473421?text=${waMsg}`, '_blank');
+    }, 500);
+  });
+
+  // ═══ ANIMATED COUNTERS ═══
+  (function() {
+    const counters = document.querySelectorAll('.about-stat-number[data-count]');
+    let animated = false;
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 2000;
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutExpo(progress);
+        const current = Math.round(eased * target);
+        el.textContent = prefix + current + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !animated) {
+          animated = true;
+          counters.forEach(el => animateCounter(el));
+          counterObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(el => counterObserver.observe(el));
+  })();
+
+  // ═══ PISA CAROUSEL ═══
+  (function(){
+    var c = document.getElementById('pisaCarousel');
+    if (!c) return;
+    var slides = c.querySelectorAll('.exp-carousel-slide');
+    var dots = document.getElementById('pisaDots');
+    var cur = 0, timer;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'exp-carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+      dots.appendChild(d);
+    }
+    function go(n) {
+      slides[cur].classList.remove('active');
+      slides[cur].querySelector('img').style.transform = 'scale(1)';
+      dots.children[cur].classList.remove('active');
+      cur = ((n % slides.length) + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      clearInterval(timer);
+      timer = setInterval(function(){ go(cur + 1); }, 5000);
+    }
+    window.pisaNav = function(dir){ go(cur + dir); };
+    timer = setInterval(function(){ go(cur + 1); }, 5000);
+  })();
+
+  // ═══ NAVIDAD CAROUSEL ═══
+  (function(){
+    var c = document.getElementById('navidadCarousel');
+    if (!c) return;
+    var slides = c.querySelectorAll('.exp-carousel-slide');
+    var dots = document.getElementById('navidadDots');
+    var cur = 0, timer;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'exp-carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+      dots.appendChild(d);
+    }
+    function go(n) {
+      slides[cur].classList.remove('active');
+      slides[cur].querySelector('img').style.transform = 'scale(1)';
+      dots.children[cur].classList.remove('active');
+      cur = ((n % slides.length) + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      clearInterval(timer);
+      timer = setInterval(function(){ go(cur + 1); }, 5500);
+    }
+    window.navidadNav = function(dir){ go(cur + dir); };
+    timer = setInterval(function(){ go(cur + 1); }, 5500);
+  })();
+
+  // ═══ BRASSERIE SHOWCASE ═══
+  (function(){
+    var thumbs = document.querySelectorAll('.brasserie-thumb');
+    var mainImg = document.getElementById('brasserieMainImg');
+    if (!mainImg || !thumbs.length) return;
+    window.brasserieShow = function(idx) {
+      thumbs.forEach(function(t){ t.classList.remove('active'); });
+      thumbs[idx].classList.add('active');
+      mainImg.style.opacity = '0';
+      setTimeout(function(){
+        mainImg.src = thumbs[idx].querySelector('img').src;
+        mainImg.style.opacity = '1';
+      }, 250);
+    };
+    mainImg.style.transition = 'opacity 0.3s ease, transform 8s ease';
+  })();
+
+  // ═══ ARABE CAROUSEL ═══
+  (function(){
+    var c = document.getElementById('arabeCarousel');
+    if (!c) return;
+    var slides = c.querySelectorAll('.exp-carousel-slide');
+    var dots = document.getElementById('arabeDots');
+    var cur = 0, timer;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'exp-carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+      dots.appendChild(d);
+    }
+    function go(n) {
+      slides[cur].classList.remove('active');
+      slides[cur].querySelector('img').style.transform = 'scale(1)';
+      dots.children[cur].classList.remove('active');
+      cur = ((n % slides.length) + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      clearInterval(timer);
+      timer = setInterval(function(){ go(cur + 1); }, 5200);
+    }
+    window.arabeNav = function(dir){ go(cur + dir); };
+    timer = setInterval(function(){ go(cur + 1); }, 5200);
+  })();
+
+  // ═══ DISCO BALL — Three.js Premium ═══
+  window.addEventListener('load', function() {
+  (function() {
+    if (typeof THREE === 'undefined') return;
+    var container = document.getElementById('disco3d');
+    if (!container) return;
+    var hero = container.parentElement;
+    var W = hero.offsetWidth  || window.innerWidth;
+    var H = hero.offsetHeight || window.innerHeight;
+
+    // Mouse parallax
+    var mouse = { x:0, y:0, tx:0, ty:0 };
+    hero.addEventListener('mousemove', function(e) {
+      var r = hero.getBoundingClientRect();
+      mouse.tx = ((e.clientX-r.left)/W - 0.5)*2;
+      mouse.ty = -((e.clientY-r.top)/H  - 0.5)*2;
+    });
+    hero.addEventListener('mouseleave', function() { mouse.tx=0; mouse.ty=0; });
+
+    // Renderer
+    var renderer = new THREE.WebGLRenderer({ alpha:true, antialias:true, powerPreference:'high-performance' });
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.75;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.shadowMap.enabled = false;
+    container.appendChild(renderer.domElement);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.inset = '0';
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
+
+    var scene  = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 100);
+    camera.position.set(0, 0, 4.5);
+
+    window.addEventListener('resize', function() {
+      W = hero.offsetWidth||window.innerWidth;
+      H = hero.offsetHeight||window.innerHeight;
+      camera.aspect = W/H; camera.updateProjectionMatrix();
+      renderer.setSize(W, H);
+    });
+
+    // ══ ENVIRONMENT MAP — HDR dorado rico 2K ══
+    var EW=2048, EH=1024;
+    var envC=document.createElement('canvas'); envC.width=EW; envC.height=EH;
+    var eX=envC.getContext('2d');
+    eX.fillStyle='#000'; eX.fillRect(0,0,EW,EH);
+
+    function eLight(cx,cy,r,stops){
+      var g=eX.createRadialGradient(cx,cy,0,cx,cy,r);
+      stops.forEach(function(s){ g.addColorStop(s[0],s[1]); });
+      eX.fillStyle=g; eX.fillRect(0,0,EW,EH);
+    }
+    // Spotlight principal — blanco-dorado muy brillante
+    eLight(400,180,620,[
+      [0,'rgba(255,255,220,1.0)'],[0.04,'rgba(255,242,165,0.97)'],
+      [0.12,'rgba(255,205,55,0.85)'],[0.28,'rgba(225,150,12,0.60)'],
+      [0.50,'rgba(165,88,5,0.28)'],[0.75,'rgba(80,35,1,0.08)'],[1,'rgba(0,0,0,0)']
+    ]);
+    // Relleno dorado derecha
+    eLight(1650,350,480,[
+      [0,'rgba(255,190,35,0.72)'],[0.22,'rgba(205,122,10,0.38)'],
+      [0.52,'rgba(115,52,2,0.12)'],[1,'rgba(0,0,0,0)']
+    ]);
+    // Rebote inferior cálido
+    eLight(1024,980,520,[
+      [0,'rgba(195,105,8,0.32)'],[0.40,'rgba(105,45,2,0.12)'],[1,'rgba(0,0,0,0)']
+    ]);
+    // Contraluz fría sutil — da profundidad
+    eLight(1024,60,280,[
+      [0,'rgba(180,200,220,0.20)'],[0.5,'rgba(60,80,100,0.06)'],[1,'rgba(0,0,0,0)']
+    ]);
+    // Puntitos de luz extra — destellos adicionales en tiles
+    [[260,700,65,'rgba(255,165,28,0.58)'],[1540,180,50,'rgba(255,225,95,0.52)'],
+     [720,860,45,'rgba(225,112,15,0.45)'],[1320,760,55,'rgba(255,180,32,0.40)'],
+     [500,300,35,'rgba(255,248,180,0.35)'],[1200,500,40,'rgba(220,140,20,0.35)']
+    ].forEach(function(l){
+      eLight(l[0],l[1],l[2],[[0,l[3]],[1,'rgba(0,0,0,0)']]);
+    });
+
+    var envTex=new THREE.CanvasTexture(envC);
+    envTex.mapping=THREE.EquirectangularReflectionMapping;
+    envTex.encoding=THREE.sRGBEncoding;
+    scene.environment=envTex;
+    scene.background=null;
+
+    // ══ LUCES DINÁMICAS — 4 luces que se mueven ══
+    scene.add(new THREE.AmbientLight(0x1A0E02, 0.85));
+
+    var L1=new THREE.SpotLight(0xFFE060, 22, 28, Math.PI/4.2, 0.22, 1.5);
+    L1.position.set(-3.2, 5.8, 5.2); L1.target.position.set(0,0,0);
+    scene.add(L1); scene.add(L1.target);
+
+    var L2=new THREE.SpotLight(0xFFAA20, 7, 20, Math.PI/3.2, 0.45, 2);
+    L2.position.set(4.8, 0.5, 4.2); L2.target.position.set(0,0,0);
+    scene.add(L2); scene.add(L2.target);
+
+    var L3=new THREE.PointLight(0xFF6600, 2.2, 14);
+    L3.position.set(0,-4.5,-4); scene.add(L3);
+
+    var L4=new THREE.PointLight(0xFFFFCC, 3.5, 16);
+    L4.position.set(2.5, 3.5, 3.5); scene.add(L4);
+    var Lf=new THREE.PointLight(0xC9A84C, 4.5, 18);
+    Lf.position.set(0, 0, 5.5);
+    scene.add(Lf);
+    var Lh=new THREE.SpotLight(0xFFFFEE,12,20,Math.PI/5.5,0.15,1.1);
+    Lh.position.set(0,4,4); Lh.target.position.set(0,0,0);
+    scene.add(Lh); scene.add(Lh.target);
+
+    // ══ MATERIAL — MeshPhysicalMaterial espejo dorado perfecto ══
+    var MatClass = THREE.MeshPhysicalMaterial || THREE.MeshStandardMaterial;
+    var tileMat = new MatClass({
+      color:              new THREE.Color(0xB08A10),
+      metalness:          1.0,
+      roughness:          0.015,       // espejo casi perfecto
+      envMapIntensity:    6.5,         // reflexión más intensa
+      clearcoat:          1.0,
+      clearcoatRoughness: 0.008,
+      reflectivity:       1.0
+    });
+
+    // ══ GEOMETRÍA — tiles cuadrados disco ball ══
+    var RADIUS=1.45, ROWS=28, GAP=0.014;
+    var ballGroup=new THREE.Group();
+    scene.add(ballGroup);
+
+    for (var row=0; row<ROWS; row++) {
+      var phi0=(row/ROWS)*Math.PI, phi1=((row+1)/ROWS)*Math.PI;
+      var phiM=(phi0+phi1)*0.5, sinP=Math.sin(phiM), cosP=Math.cos(phiM);
+      var COLS=Math.max(4, Math.round(32*sinP));
+      var tH=(phi1-phi0)*RADIUS - GAP;
+      var tW=(2*Math.PI/COLS)*sinP*RADIUS - GAP;
+      if (tH<0.004||tW<0.004) continue;
+      var geo=new THREE.PlaneGeometry(tW, tH);
+      for (var col=0; col<COLS; col++) {
+        var th=(col+0.5)/COLS*2*Math.PI;
+        var tile=new THREE.Mesh(geo, tileMat);
+        var px=RADIUS*sinP*Math.cos(th);
+        var py=RADIUS*cosP;
+        var pz=RADIUS*sinP*Math.sin(th);
+        tile.position.set(px,py,pz);
+        tile.lookAt(px*2.0, py*2.0, pz*2.0);
+        ballGroup.add(tile);
+      }
+    }
+
+    // Cuerda metálica
+    var cordM=new THREE.MeshStandardMaterial({color:0x8B6914,metalness:0.95,roughness:0.25});
+    var cord=new THREE.Mesh(new THREE.CylinderGeometry(0.007,0.007,3.5,8), cordM);
+    cord.position.set(0, RADIUS+1.75, 0); scene.add(cord);
+
+    // ══ GLOW — halo dorado que respira ══
+    var gC=document.createElement('canvas'); gC.width=gC.height=512;
+    var gX=gC.getContext('2d');
+    var gGr=gX.createRadialGradient(256,256,0,256,256,256);
+    gGr.addColorStop(0,    'rgba(225,155,14,0.55)');
+    gGr.addColorStop(0.18, 'rgba(185,105,7,0.35)');
+    gGr.addColorStop(0.40, 'rgba(110,55,3,0.18)');
+    gGr.addColorStop(0.62, 'rgba(45,18,0,0.08)');
+    gGr.addColorStop(1,    'rgba(0,0,0,0)');
+    gX.fillStyle=gGr; gX.fillRect(0,0,512,512);
+    var glowMesh=new THREE.Mesh(
+      new THREE.PlaneGeometry(6.5,6.5),
+      new THREE.MeshBasicMaterial({
+        map:new THREE.CanvasTexture(gC), transparent:true, opacity:1.0,
+        blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide
+      })
+    );
+        // ══ REFLEJO ESPEJO OSCURO — debajo de la bola ══
+    // Capa 1: sombra difusa exterior (la más grande y suave)
+    var rC1=document.createElement('canvas'); rC1.width=512; rC1.height=256;
+    var rX1=rC1.getContext('2d');
+    rX1.clearRect(0,0,512,256);
+    var rg1=rX1.createRadialGradient(256,20,0,256,20,256);
+    rg1.addColorStop(0,   'rgba(0,0,0,0.55)');
+    rg1.addColorStop(0.25,'rgba(0,0,0,0.30)');
+    rg1.addColorStop(0.55,'rgba(0,0,0,0.10)');
+    rg1.addColorStop(0.80,'rgba(0,0,0,0.03)');
+    rg1.addColorStop(1,   'rgba(0,0,0,0)');
+    rX1.fillStyle=rg1; rX1.fillRect(0,0,512,256);
+    var reflShadow=new THREE.Mesh(
+      new THREE.PlaneGeometry(5.2, 2.4),
+      new THREE.MeshBasicMaterial({
+        map:new THREE.CanvasTexture(rC1), transparent:true, opacity:0.85,
+        blending:THREE.NormalBlending, depthWrite:false, side:THREE.DoubleSide
+      })
+    );
+    reflShadow.rotation.x=-Math.PI/2;
+    reflShadow.position.y=-(RADIUS+0.04);
+    scene.add(reflShadow);
+
+    // Capa 2: reflejo dorado suave (la bola se "ve" en el suelo)
+    var rC2=document.createElement('canvas'); rC2.width=512; rC2.height=256;
+    var rX2=rC2.getContext('2d');
+    rX2.clearRect(0,0,512,256);
+    // Silueta elíptica del reflejo
+    var rg2=rX2.createRadialGradient(256,10,0,256,10,220);
+    rg2.addColorStop(0,   'rgba(195,132,12,0.38)');
+    rg2.addColorStop(0.18,'rgba(155,92,6,0.22)');
+    rg2.addColorStop(0.40,'rgba(95,48,2,0.10)');
+    rg2.addColorStop(0.65,'rgba(40,18,0,0.03)');
+    rg2.addColorStop(1,   'rgba(0,0,0,0)');
+    rX2.fillStyle=rg2; rX2.fillRect(0,0,512,256);
+    // Línea de contacto — más intensa justo en la base
+    var rg3=rX2.createLinearGradient(0,0,0,60);
+    rg3.addColorStop(0,   'rgba(210,148,14,0.28)');
+    rg3.addColorStop(0.5, 'rgba(160,95,6,0.10)');
+    rg3.addColorStop(1,   'rgba(0,0,0,0)');
+    rX2.fillStyle=rg3; rX2.fillRect(100,0,312,60);
+    var floorMesh=new THREE.Mesh(
+      new THREE.PlaneGeometry(4.0, 1.8),
+      new THREE.MeshBasicMaterial({
+        map:new THREE.CanvasTexture(rC2), transparent:true, opacity:0.75,
+        blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide
+      })
+    );
+    floorMesh.rotation.x=-Math.PI/2;
+    floorMesh.position.y=-(RADIUS+0.03);
+    scene.add(floorMesh);
+
+glowMesh.position.z=-0.9; scene.add(glowMesh);
+
+    // ══ SPARKLES — estrella 8 puntas ══
+    var sC=document.createElement('canvas'); sC.width=sC.height=256;
+    var sX=sC.getContext('2d'), hs=256;
+    for (var arm=0; arm<4; arm++) {
+      sX.save(); sX.translate(hs,hs); sX.rotate(arm*Math.PI/2);
+      var sg=sX.createLinearGradient(0,0,0,-hs);
+      sg.addColorStop(0,    'rgba(255,252,205,1.0)');
+      sg.addColorStop(0.04, 'rgba(255,228,85,0.92)');
+      sg.addColorStop(0.14, 'rgba(248,172,18,0.58)');
+      sg.addColorStop(0.35, 'rgba(205,112,5,0.20)');
+      sg.addColorStop(0.65, 'rgba(135,62,1,0.05)');
+      sg.addColorStop(1,    'rgba(0,0,0,0)');
+      sX.fillStyle=sg;
+      sX.beginPath(); sX.moveTo(-hs*0.008,0); sX.lineTo(0,-hs); sX.lineTo(hs*0.008,0);
+      sX.closePath(); sX.fill(); sX.restore();
+    }
+    for (var arm=0; arm<4; arm++) {
+      sX.save(); sX.translate(hs,hs); sX.rotate(arm*Math.PI/2+Math.PI/4);
+      var sg2=sX.createLinearGradient(0,0,0,-hs*0.50);
+      sg2.addColorStop(0,   'rgba(255,228,78,0.72)');
+      sg2.addColorStop(0.25,'rgba(218,148,20,0.32)');
+      sg2.addColorStop(0.60,'rgba(170,88,4,0.08)');
+      sg2.addColorStop(1,   'rgba(0,0,0,0)');
+      sX.fillStyle=sg2;
+      sX.beginPath(); sX.moveTo(-hs*0.005,0); sX.lineTo(0,-hs*0.50); sX.lineTo(hs*0.005,0);
+      sX.closePath(); sX.fill(); sX.restore();
+    }
+    var ncg=sX.createRadialGradient(hs,hs,0,hs,hs,hs*0.10);
+    ncg.addColorStop(0,'rgba(255,255,245,1.0)');
+    ncg.addColorStop(0.38,'rgba(255,232,92,0.75)');
+    ncg.addColorStop(0.72,'rgba(255,162,22,0.28)');
+    ncg.addColorStop(1,'rgba(0,0,0,0)');
+    sX.fillStyle=ncg; sX.fillRect(0,0,512,512);
+    var sparkleTex=new THREE.CanvasTexture(sC);
+
+    var sparkles=[];
+    for (var i=0; i<22; i++) {
+      var sc=i<8 ? 0.18+Math.random()*0.22 : 0.28+Math.random()*0.55;
+      var sm=new THREE.Mesh(
+        new THREE.PlaneGeometry(sc,sc),
+        new THREE.MeshBasicMaterial({
+          map:sparkleTex, transparent:true, opacity:0,
+          blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide
+        })
+      );
+      sm.userData={active:false,life:0,maxLife:0,peak:0};
+      scene.add(sm); sparkles.push(sm);
+    }
+
+    function spawnSparkle() {
+      var free=sparkles.filter(function(s){return !s.userData.active;});
+      if (!free.length) return;
+      var s=free[Math.floor(Math.random()*free.length)];
+      s.userData.phi=(0.15+Math.random()*0.72)*Math.PI;
+      s.userData.th=Math.random()*Math.PI*2;
+      s.userData.active=true;
+      s.userData.life=0;
+      s.userData.maxLife=45+Math.random()*55;
+      s.userData.peak=0.62+Math.random()*0.28;
+      s.material.opacity=0;
+    }
+
+    // ══ ANIMACIÓN ══
+    var clock=new THREE.Clock(), spawnT=0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      var t=clock.getElapsedTime();
+
+      // Mouse lerp suave
+      mouse.x+=(mouse.tx-mouse.x)*0.04;
+      mouse.y+=(mouse.ty-mouse.y)*0.04;
+
+      // ── Rotación continua 360° suave y elegante ──
+      ballGroup.rotation.y = t*0.45;
+      ballGroup.rotation.x = Math.sin(t*0.15)*0.06 + mouse.y*0.15;
+      ballGroup.rotation.z = -mouse.x*0.08;
+
+      // ── Cámara parallax con mouse ──
+      camera.position.x+=(mouse.x*0.38-camera.position.x)*0.05;
+      camera.position.y+=(mouse.y*0.24-camera.position.y)*0.05;
+      camera.lookAt(0,0,0);
+
+      // ── Luces dinámicas — orbitan, crean reflejos en movimiento ──
+      L1.position.x=Math.sin(t*0.28)*4.5-1.5;
+      L1.position.z=Math.cos(t*0.18)*3.0+4.8;
+      L1.intensity=24+Math.sin(t*0.52)*10;
+
+      L2.position.x=Math.cos(t*0.19)*4.0+2.0;
+      L2.position.z=Math.sin(t*0.25)*2.2+4.0;
+      L2.intensity=6+Math.sin(t*0.33)*2;
+
+      L4.position.x=Math.sin(t*0.28)*3.0;
+      L4.position.y=Math.cos(t*0.22)*2.5+2.5;
+      L4.intensity=3+Math.sin(t*0.55)*1.5;
+      // Highlight sweep
+      Lh.position.x=Math.sin(t*0.60)*4.0;
+      Lh.position.y=Math.cos(t*0.40)*3.0+2.0;
+      Lh.position.z=Math.abs(Math.sin(t*0.50))*2.5+3.0;
+      Lh.intensity=8+Math.sin(t*0.75)*9;
+
+      // ── Glow respira + sigue mouse ──
+      var gs=1.0+Math.sin(t*0.48)*0.05;
+      glowMesh.scale.set(gs,gs,1);
+      glowMesh.material.opacity=0.62+Math.sin(t*0.52)*0.16;
+      glowMesh.position.x=mouse.x*0.20;
+      glowMesh.position.y=mouse.y*0.14;
+
+      // ── Sparkles ──
+      spawnT++;
+      if (spawnT>8+Math.random()*8) { spawnSparkle(); spawnT=0; }
+      sparkles.forEach(function(s) {
+        if (!s.userData.active) return;
+        s.userData.life++;
+        var p=s.userData.life/s.userData.maxLife;
+        // Fade in/out smooth — sin curve
+        s.material.opacity=s.userData.peak*Math.pow(Math.sin(p*Math.PI),0.65);
+        // Follow ball rotation exactly
+        var ry=ballGroup.rotation.y;
+        var R2=RADIUS*1.025;
+        s.position.set(
+          R2*Math.sin(s.userData.phi)*Math.cos(s.userData.th+ry),
+          R2*Math.cos(s.userData.phi),
+          R2*Math.sin(s.userData.phi)*Math.sin(s.userData.th+ry)
+        );
+        // Face camera always
+        s.lookAt(camera.position);
+        if (s.userData.life>=s.userData.maxLife) { s.userData.active=false; s.material.opacity=0; }
+      });
+
+      reflShadow.material.opacity = 0.80 + Math.sin(t*0.32)*0.08;
+      floorMesh.material.opacity  = 0.68 + Math.sin(t*0.38)*0.12;
+      renderer.render(scene, camera);
+    }
+    animate();
+  })();
+  }); // end window.load
+
+  // ═══ MASIVAS CAROUSEL ═══
+  (function(){
+    var c = document.getElementById('masivasCarousel');
+    if (!c) return;
+    var slides = c.querySelectorAll('.exp-carousel-slide');
+    var dots = document.getElementById('masisvasDots');
+    var cur = 0, timer;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'exp-carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+      dots.appendChild(d);
+    }
+    function go(n) {
+      slides[cur].classList.remove('active');
+      slides[cur].querySelector('img').style.transform = 'scale(1)';
+      dots.children[cur].classList.remove('active');
+      cur = ((n % slides.length) + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      clearInterval(timer);
+      timer = setInterval(function(){ go(cur + 1); }, 5000);
+    }
+    window.masivasNav = function(dir){ go(cur + dir); };
+    timer = setInterval(function(){ go(cur + 1); }, 5000);
+  })();
+
+
+  // ═══ EIFFEL CAROUSEL ═══
+  (function(){
+    var c = document.getElementById('eiffelCarousel');
+    if (!c) return;
+    var slides = c.querySelectorAll('.exp-carousel-slide');
+    var dots = document.getElementById('eiffelDots');
+    var cur = 0, timer;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'exp-carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+      dots.appendChild(d);
+    }
+    function go(n) {
+      slides[cur].classList.remove('active');
+      slides[cur].querySelector('img').style.transform = 'scale(1)';
+      dots.children[cur].classList.remove('active');
+      cur = ((n % slides.length) + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      clearInterval(timer);
+      timer = setInterval(function(){ go(cur + 1); }, 5000);
+    }
+    window.eiffelNav = function(dir){ go(cur + dir); };
+    timer = setInterval(function(){ go(cur + 1); }, 5000);
+  })();
+
+
+  // ═══ HALLOWEEN CAROUSEL ═══
+  (function(){
+    var c = document.getElementById('halloweenCarousel');
+    if (!c) return;
+    var slides = c.querySelectorAll('.exp-carousel-slide');
+    var dots = document.getElementById('halloweenDots');
+    var cur = 0, timer;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'exp-carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+      dots.appendChild(d);
+    }
+    function go(n) {
+      slides[cur].classList.remove('active');
+      slides[cur].querySelector('img').style.transform = 'scale(1)';
+      dots.children[cur].classList.remove('active');
+      cur = ((n % slides.length) + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      clearInterval(timer);
+      timer = setInterval(function(){ go(cur + 1); }, 5000);
+    }
+    window.halloweenNav = function(dir){ go(cur + dir); };
+    timer = setInterval(function(){ go(cur + 1); }, 5000);
+  })();
+
+
+</script>
+<script>
+function showEvento(id) {
+    document.querySelectorAll('.evento-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.evento-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  var brasserieImgs = [
+    'img/ev_brasserie_01.jpg',
+    'img/ev_brasserie_02.jpg',
+    'img/ev_brasserie_03.jpg',
+    'img/ev_brasserie_04.jpg',
+    'img/ev_brasserie_05.jpg',
+    'img/ev_brasserie_06.jpg',
+  ];
+
+  function updateMainImg(id, src) {
+    var el = document.getElementById(id);
+    el.src = src;
+    var blur = el.parentElement.querySelector('.bg-blur');
+    if (blur) blur.src = src;
+  }
+  function brasserieThumb(i) {
+    document.getElementById('brasserie-main').src = brasserieImgs[i];
+    var thumbs = document.querySelectorAll('#panel-brasserie .thumb');
+    thumbs.forEach(function(t, idx) { t.classList.toggle('active', idx === i); });
+  }
+
+
+  var enamoradosImgs = [
+    'img/ev_enamorados_05.jpg','img/ev_enamorados_01.jpg','img/ev_enamorados_02.jpg',
+    'img/ev_enamorados_03.jpg','img/ev_enamorados_04.jpg','img/ev_enamorados_06.jpg',
+    'img/ev_enamorados_07.jpg',
+  ];
+  function enamoradosThumb(i) {
+    updateMainImg('enamorados-main', enamoradosImgs[i]);
+    var thumbs = document.querySelectorAll('#panel-enamorados .thumb');
+    thumbs.forEach(function(t, idx) { t.classList.toggle('active', idx === i); });
+  }
+
+
+  var mandarinAnonuevoImgs = [
+    'img/ev_anonuevo_mandarin_00.jpg','img/ev_anonuevo_mandarin_01.jpg',
+    'img/ev_anonuevo_mandarin_02.jpg','img/ev_anonuevo_mandarin_05.jpg',
+    'img/ev_anonuevo_mandarin_06.jpg','img/ev_anonuevo_mandarin_07.jpg',
+    'img/ev_anonuevo_mandarin_08.jpg',
+  ];
+  function mandarinAnonuevoThumb(i) {
+    updateMainImg('mandarin-anonuevo-main', mandarinAnonuevoImgs[i]);
+    var thumbs = document.querySelectorAll('#panel-mandarin-anonuevo .thumb');
+    thumbs.forEach(function(t, idx) { t.classList.toggle('active', idx === i); });
+  }
+
+
+  var montiImgs = ['img/ev_monti_anonuevo_05.jpg','img/ev_monti_anonuevo_03.jpg','img/ev_monti_anonuevo_04.jpg','img/ev_monti_anonuevo_06.jpg','img/ev_monti_anonuevo_07.jpg'];
+  function montiThumb(i) {
+    var hero = document.getElementById('monti-hero');
+    hero.style.aspectRatio = '3/2';
+    hero.style.cursor = 'default';
+    hero.onclick = null;
+    hero.innerHTML = '<img src="'+montiImgs[i]+'" style="width:100%;height:100%;object-fit:cover;">';
+    document.querySelectorAll('#panel-monti-anonuevo .thumb').forEach(function(t,idx){ t.classList.toggle('active', idx===i); });
+  }
+  function montiShowVideo() {
+    var hero = document.getElementById('monti-hero');
+    hero.style.aspectRatio = '16/9';
+    hero.style.cursor = 'pointer';
+    hero.onclick = function(){ window.open('https://www.youtube.com/watch?v=zeeCQcwSyCg','_blank'); };
+    hero.innerHTML = '<div style="text-align:center;"><div style="width:72px;height:72px;border-radius:50%;background:rgba(212,168,67,0.15);border:2px solid rgba(212,168,67,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"#D4A843\" style=\"margin-left:4px\"><polygon points=\"8,5 20,12 8,19\"/></svg></div><p style=\"font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(212,168,67,0.8);\" >Ver Video</p></div>';
+    document.querySelectorAll('#panel-monti-anonuevo .thumb').forEach(function(t,idx){ t.classList.toggle('active', idx===5); });
+  }
+
+
+  var vendimiaMontiImgs = ['img/ev_vendimia_monti_02.jpg', 'img/ev_vendimia_monti_03.jpg', 'img/ev_vendimia_monti_04.jpg', 'img/ev_vendimia_monti_07.jpg', 'img/ev_vendimia_monti_09.jpg', 'img/ev_vendimia_monti_08.jpg', 'img/ev_vendimia_monti_06.jpg'];
+  function vendimiaMontiThumb(i) {
+    updateMainImg('vendimia-monti-main', vendimiaMontiImgs[i]);
+    document.querySelectorAll('#panel-vendimia-monti .thumb').forEach(function(t,idx){ t.classList.toggle('active', idx===i); });
+  }
+
+
+  var vendimiaMandarinImgs = ['img/ev_vendimia_mandarin_06.jpg', 'img/ev_vendimia_mandarin_01.jpg', 'img/ev_vendimia_mandarin_02.jpg', 'img/ev_vendimia_mandarin_03.jpg', 'img/ev_vendimia_mandarin_04.jpg', 'img/ev_vendimia_mandarin_05.jpg'];
+  function vendimiaMandarinThumb(i) {
+    updateMainImg('vendimia-mandarin-main', vendimiaMandarinImgs[i]);
+    document.querySelectorAll('#panel-vendimia-mandarin .thumb').forEach(function(t,idx){ t.classList.toggle('active', idx===i); });
+  }
+</script>
+
+<!-- WhatsApp flotante -->
+<a href="https://wa.me/56968473421?text=Hola%2C+quiero+cotizar+un+evento" target="_blank" rel="noopener" class="wa-float" aria-label="Cotiza por WhatsApp">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.103 1.514 5.831L.057 23.447a.75.75 0 00.922.899l5.733-1.503A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.706 9.706 0 01-4.95-1.355l-.355-.213-3.685.967.984-3.596-.232-.371A9.722 9.722 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+  Cotiza por WhatsApp
+</a>
+
+</body>
+</html>
