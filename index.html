@@ -2202,20 +2202,21 @@
     .hero-content { padding: 0 22px; }
     .hero-brand   { font-size: 11px; letter-spacing: 5px; margin-bottom: 6px;
                     animation-delay: 1.5s; }
-    /* 2. Eyebrow: más contraste + delays reducidos */
-    .hero-eyebrow { font-size: 8.5px; letter-spacing: 2.5px; margin-bottom: 16px;
-                    color: rgba(225,232,242,0.96);
-                    text-shadow: 0 1px 8px rgba(0,0,0,0.60);
+    /* eyebrow — legible sin esfuerzo */
+    .hero-eyebrow { font-size: 10.5px; letter-spacing: 1.8px; margin-bottom: 18px;
+                    color: rgba(225,232,242,0.97);
+                    text-shadow: 0 1px 6px rgba(0,0,0,0.55);
                     animation-delay: 1.7s; }
     .hero-title   { margin-bottom: 16px; }
-    .hero-line-1  { font-size: clamp(22px, 5.5vw, 34px); letter-spacing: 2px; }
-    /* 1. EXTRAORDINARIOS: reducido para que quepa completo */
+    /* "CREAMOS MOMENTOS" — más grande y legible */
+    .hero-line-1  { font-size: clamp(26px, 7vw, 40px); letter-spacing: 3px; }
+    /* EXTRAORDINARIOS — cabe completo */
     .hero-title .hero-line-3 span { font-size: clamp(32px, 9vw, 58px); letter-spacing: -1px; }
-    /* 3. Subtítulo: más contraste */
-    .hero-subtitle { font-size: 9.5px; letter-spacing: 1.2px; line-height: 1.85;
-                     max-width: 270px; margin: 0 auto 22px;
+    /* subtítulo descriptivo — legible */
+    .hero-subtitle { font-size: 12px; letter-spacing: 1.4px; line-height: 2.0;
+                     max-width: 320px; margin: 0 auto 22px;
                      color: rgba(230,236,245,0.97);
-                     text-shadow: 0 1px 5px rgba(0,0,0,0.45); }
+                     text-shadow: 0 1px 5px rgba(0,0,0,0.40); }
     .hero-actions  { flex-direction: column; gap: 10px; align-items: center; width: 100%; }
     .btn-primary   { padding: 16px 28px; font-size: 10px; letter-spacing: 2.5px;
                      width: 100%; max-width: 256px; text-align: center; display: block; }
@@ -2229,9 +2230,10 @@
   @media (max-width: 480px) {
     .hero          { padding-top: 100px; padding-bottom: 44px; }
     .hero-brand    { font-size: 10px; letter-spacing: 4px; }
-    .hero-line-1   { font-size: clamp(20px, 5.5vw, 30px); }
+    .hero-eyebrow  { font-size: 10px; letter-spacing: 1.5px; }
+    .hero-line-1   { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: 2.5px; }
     .hero-title .hero-line-3 span { font-size: clamp(28px, 8.5vw, 48px); }
-    .hero-subtitle { font-size: 9px; max-width: 248px; }
+    .hero-subtitle { font-size: 11px; letter-spacing: 1.3px; max-width: 288px; }
     .btn-primary   { max-width: 244px; }
   }
 
