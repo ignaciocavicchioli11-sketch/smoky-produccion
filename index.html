@@ -2582,6 +2582,56 @@
     .footer-logo { font-size: 15px; letter-spacing: 3px; }
   }
 
+  /* ── EVENTO SELECT: oculto en desktop ── */
+  .evento-select { display: none; }
+
+  /* ── EVENTO SELECT: dropdown premium en mobile ── */
+  @media (max-width: 768px) {
+    /* Ocultar tabs, mostrar select */
+    .evento-tabs        { display: none !important; }
+    .evento-tabs-label  { display: none !important; }
+    .evento-tabs-wrapper {
+      -webkit-mask-image: none;
+      mask-image: none;
+      margin-bottom: 24px;
+    }
+
+    .evento-select {
+      display: block;
+      width: 100%;
+      padding: 15px 44px 15px 18px;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid rgba(212,168,67,0.38);
+      color: rgba(245,240,232,0.92);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4A843' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      transition: border-color 0.3s;
+    }
+    .evento-select:focus {
+      border-color: rgba(212,168,67,0.72);
+      box-shadow: 0 0 0 1px rgba(212,168,67,0.12);
+    }
+    .evento-select option {
+      background: #0A0A0A;
+      color: rgba(245,240,232,0.9);
+    }
+
+    /* Centrar cliente y nombre del evento */
+    .evento-info-left   { text-align: center; width: 100%; }
+    .evento-cliente     { text-align: center; }
+    .evento-nombre      { text-align: center; }
+  }
+
   /* ── CENTRADO DE TÍTULOS Y LABELS EN MOBILE ── */
   @media (max-width: 768px) {
 
@@ -2735,6 +2785,14 @@
       <div class="evento-tab" onclick="showEvento('vendimia-monti')">Vendimia Monticello</div>
       <div class="evento-tab" onclick="showEvento('mandarin-anonuevo')">Año Nuevo Mandarin</div>
     </div>
+    <select class="evento-select" id="eventoSelect" onchange="showEvento(this.value)">
+      <option value="enamorados">San Valentín — Mandarin Oriental</option>
+      <option value="monti-anonuevo">Año Nuevo — Casino Monticello</option>
+      <option value="brasserie">Brasserie — Yann Yvin</option>
+      <option value="vendimia-mandarin">Vendimia — Mandarin Oriental</option>
+      <option value="vendimia-monti">Vendimia — Casino Monticello</option>
+      <option value="mandarin-anonuevo">Año Nuevo — Mandarin Oriental</option>
+    </select>
   </div>
 
   <!-- PANEL 1: Enamorados -->
@@ -4259,9 +4317,14 @@ glowMesh.position.z=-0.9; scene.add(glowMesh);
 <script>
 function showEvento(id) {
     document.querySelectorAll('.evento-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.evento-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('panel-' + id).classList.add('active');
-    event.target.classList.add('active');
+    document.querySelectorAll('.evento-tab').forEach(t => {
+      const oc = t.getAttribute('onclick') || '';
+      t.classList.toggle('active', oc.includes("'" + id + "'"));
+    });
+    const panel = document.getElementById('panel-' + id);
+    if (panel) panel.classList.add('active');
+    const sel = document.getElementById('eventoSelect');
+    if (sel) sel.value = id;
   }
 
   var brasserieImgs = [
