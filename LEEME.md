@@ -2,7 +2,7 @@
 
 Web de la productora de eventos. Un solo archivo `index.html` (HTML/CSS/JS, sin build).
 
-**En vivo:** https://smoky-produccion.vercel.app
+**En vivo:** https://www.smokyproduccion.cl
 
 ## Estructura
 ```
