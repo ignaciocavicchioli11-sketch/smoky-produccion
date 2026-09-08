@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="FV9JsPL-nF6GUqrJPzf9WxdMM01EVCR5pQfHAZPTl0I">
+<link rel="preconnect" href="https://connect.facebook.net">
+<!-- Meta Pixel — Smoky Produccion -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2053319418722849');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></noscript>
+<!-- fin Meta Pixel -->
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3880,6 +3894,9 @@
     if (type) waMsg += `Tipo: ${type}%0A`;
     if (message) waMsg += `Detalle: ${message}`;
 
+    // Conversion: formulario enviado. Sin datos personales en el evento.
+    if (window.fbq) fbq('track', 'Lead', { content_category: type || 'sin especificar' });
+
     // Show success state
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
@@ -3889,6 +3906,14 @@
       window.open(`https://wa.me/56968473421?text=${waMsg}`, '_blank');
     }, 500);
   });
+
+  // ═══ CONVERSION: clic a WhatsApp ═══
+  // El formulario abre WhatsApp por window.open, no por clic en <a>,
+  // asi que no se duplica con el evento Lead.
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest && e.target.closest('a[href*="wa.me"]');
+    if (link && window.fbq) fbq('track', 'Contact', { content_category: 'whatsapp' });
+  }, true);
 
   // ═══ ANIMATED COUNTERS ═══
   (function() {
