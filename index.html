@@ -18,7 +18,7 @@ fbq('track','PageView');
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></noscript>
 <!-- fin Meta Pixel -->
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preload" href="/vendor/three.min.js" as="script">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2742,7 +2742,9 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
   }
 
   </style>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- three.js r128 (MIT) servido desde nuestro dominio: desde cdnjs la descarga
+     llegaba a tardar 7s por el DNS, y en una de cada tres pruebas fallaba entera. -->
+<script defer src="/vendor/three.min.js"></script>
 </head>
 <body>
 
