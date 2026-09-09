@@ -41,6 +41,12 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
 <meta name="twitter:image:alt" content="Smoky Producción — producción de eventos en Santiago, Chile">
 <meta name="twitter:image" content="https://www.smokyproduccion.cl/og-image.jpg">
 <link rel="canonical" href="https://www.smokyproduccion.cl/">
+<noscript><style>
+  /* Sin JS no corre la animacion de entrada. Sin esto, el subtitulo y el
+     boton de cotizar quedarian invisibles para siempre. */
+  .hero-subtitle, .hero-actions { opacity: 1 !important; transform: none !important; }
+  .hero-title .hero-line-3 span { opacity: 1 !important; transform: none !important; }
+</style></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -424,7 +430,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
 
   .hero-title .hero-line-3 span {
     display: inline-block;
-    font-size: clamp(56px, 10.5vw, 128px);
+    font-size: clamp(52px, 9.3vw, 128px);
     font-style: italic;
     color: var(--gold-bright);
     letter-spacing: -3px;
@@ -2972,7 +2978,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
     <p class="hero-brand">SMOKY <span>PRODUCCIÓN</span></p>
     <h1 class="hero-title" id="heroTitle">
       <span class="hero-eyebrow">Productora de eventos en Santiago</span>
-      <span class="hero-line hero-line-1"><span class="hero-typewriter" id="heroType1">Producimos para el</span><span class="hero-cursor" id="heroCursor1" style="display:none"></span></span>
+      <span class="hero-line hero-line-1"><span class="hero-typewriter" id="heroType1">Producimos para</span><span class="hero-cursor" id="heroCursor1" style="display:none"></span></span>
       <span class="hero-line hero-line-3" style="position:relative;z-index:11;"><span id="heroImaginan">Mandarin Oriental</span></span>
     </h1>
     <p class="hero-subtitle" id="heroSubtitle">Diez años y más de 200 eventos para Mandarin Oriental, Casino Monticello y Dreams.<br>Escenografía, iluminación, sonido y elenco propios.</p>
@@ -3793,8 +3799,8 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
     }
 
     const isMobile = window.innerWidth <= 768;
-    setTimeout(() => { splash.classList.add('phase-out'); }, isMobile ? 800 : 1200);
-    setTimeout(() => { splash.classList.add('hidden'); splash.style.display = 'none'; }, isMobile ? 1400 : 2000);
+    setTimeout(() => { splash.classList.add('phase-out'); }, isMobile ? 350 : 550);
+    setTimeout(() => { splash.classList.add('hidden'); splash.style.display = 'none'; }, isMobile ? 700 : 1000);
   })();
 
   // ═══ CUSTOM CURSOR (hover devices only) ═══
@@ -3866,17 +3872,32 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
     });
   });
 
+  // ═══ RED DE SEGURIDAD DEL HERO ═══
+  // Se registra ANTES de la animacion: si el efecto de tipeo falla, el
+  // titular, el subtitulo y el boton de cotizar aparecen igual. El banner es
+  // por donde entra el trafico pagado; no puede quedar mudo por un error.
+  setTimeout(function () {
+    var t1  = document.getElementById('heroType1');
+    var big = document.getElementById('heroImaginan');
+    var sub = document.getElementById('heroSubtitle');
+    var act = document.getElementById('heroActions');
+    if (t1 && !t1.textContent.trim()) t1.textContent = 'Producimos para';
+    if (big) big.classList.add('revealed');
+    if (sub) sub.classList.add('visible');
+    if (act) act.classList.add('visible');
+  }, 4000);
+
   // ═══ HERO TYPEWRITER EFFECT ═══
   (function() {
     const segments = [
-      { text: 'Producimos para el', gold: false }
+      { text: 'Producimos para', gold: false }
     ];
     const type1 = document.getElementById('heroType1');
     // El H1 trae el texto en el HTML (SEO / no-JS); se limpia en parseo, antes del primer paint
     if (type1) type1.textContent = '';
     const cursor1 = document.getElementById('heroCursor1');
     const imaginan = document.getElementById('heroImaginan');
-    const charDelay = 75;
+    const charDelay = 38;
 
     function typeSegments(element, segs, cursor, callback) {
       cursor.style.display = 'inline-block';
@@ -3891,8 +3912,8 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
             setTimeout(() => {
               cursor.style.display = 'none';
               if (callback) callback();
-            }, 400);
-          }, 300);
+            }, 200);
+          }, 120);
           return;
         }
 
@@ -3910,7 +3931,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
         if (charIndex < seg.text.length) {
           currentSpan.textContent += seg.text.charAt(charIndex);
           charIndex++;
-          setTimeout(nextChar, charDelay + Math.random() * 40);
+          setTimeout(nextChar, charDelay + Math.random() * 18);
         } else {
           segIndex++;
           charIndex = 0;
@@ -3918,11 +3939,13 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
         }
       }
 
-      setTimeout(nextChar, 200);
+      setTimeout(nextChar, 120);
     }
 
     // Start after intro splash fades — más rápido en mobile
-    const heroStartDelay = window.innerWidth <= 768 ? 1800 : 3800;
+    // Con tráfico pagado el visitante decide en 2-3 segundos: el boton de
+    // cotizar tiene que estar a la vista antes de eso.
+    const heroStartDelay = window.innerWidth <= 768 ? 600 : 850;
     setTimeout(() => {
       typeSegments(type1, segments, cursor1, () => {
         setTimeout(() => {
@@ -3930,8 +3953,8 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
           setTimeout(() => {
             document.getElementById('heroSubtitle').classList.add('visible');
             document.getElementById('heroActions').classList.add('visible');
-          }, 800);
-        }, 300);
+          }, 400);
+        }, 150);
       });
     }, heroStartDelay);
   })();
