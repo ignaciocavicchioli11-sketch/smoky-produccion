@@ -153,6 +153,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
     --dark: #0A0A0A;
     --dark-2: #111111;
     --dark-3: #1A1A1A;
+    --dark-band: #060605;    /* el mas profundo: franjas que puntuan el scroll */
     --white: #F5F0E8;
     --white-dim: rgba(245,240,232,0.72);
     --white-dimmer: rgba(245,240,232,0.52);
@@ -606,10 +607,10 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
      Prueba real y quieta. Reemplaza al ticker animado: un comprador
      corporativo escanea logos, no lee texto que se mueve. */
   .trustbar {
-    border-top: 1px solid rgba(212,168,67,0.18);
-    border-bottom: 1px solid rgba(212,168,67,0.18);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     padding: 28px 60px;
-    background: #070706;
+    background: var(--dark-band);
   }
   .trustbar-inner {
     max-width: 1180px;
@@ -903,7 +904,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
     aspect-ratio: 4/5;
     overflow: hidden;
     background: var(--dark-3);
-    border: 1px solid rgba(212,168,67,0.08);
+    border: 1px solid var(--border);
     transition: border-color 0.4s, transform 0.4s;
   }
   .exp-card:hover { border-color: var(--border-hover); transform: scale(1.01); }
@@ -1087,7 +1088,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
 
   /* ═══ HIGHLIGHT ═══ */
   .highlight {
-    background: var(--dark-2);
+    background: var(--dark-band);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     text-align: center;
@@ -1495,7 +1496,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
 
   /* ═══ FOOTER ═══ */
   footer {
-    background: var(--dark-2);
+    background: var(--dark-band);
     padding: 52px 60px;
     display: flex;
     align-items: center;
@@ -1916,7 +1917,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
 
   /* ═══ SHOWCASE ═══ */
   .showcase {
-    background: var(--dark-2);
+    background: var(--dark);
     padding: 120px 5% 100px;
     position: relative;
   }
@@ -2050,14 +2051,6 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
   }
   .img-placeholder-icon { font-size: 64px; opacity: 0.2; }
   .img-placeholder-text { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.2); }
-
-  /* Gradientes de fondo para placeholders */
-  .grad-monti-anonuevo { background: linear-gradient(135deg, #050e1a 0%, #0d2040 40%, #1a3a6a 70%, #2a4a8a 100%); }
-  .grad-enamorados { background: linear-gradient(135deg, #1a0008 0%, #4a0018 50%, #8B0030 100%); }
-  .grad-brasserie { background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 50%, #6B1A7A 100%); }
-  .grad-vendimia-mandarin { background: linear-gradient(135deg, #1a0800 0%, #4a1500 50%, #8B3500 100%); }
-  .grad-vendimia-monti { background: linear-gradient(135deg, #051005 0%, #0d2e0d 50%, #1a4a1a 100%); }
-  .grad-mandarin-anonuevo { background: linear-gradient(135deg, #050520 0%, #0d0d3a 50%, #1a1a60 100%); }
 
   /* Thumbnails */
   .evento-thumbs {
@@ -2193,8 +2186,8 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
   .authority {
     padding: 100px 60px;
     background: #050504;
-    border-top: 1px solid rgba(212,168,67,0.08);
-    border-bottom: 1px solid rgba(212,168,67,0.08);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
   .authority-inner { max-width: 1080px; margin: 0 auto; text-align: center; }
   .authority-eyebrow {
@@ -2248,9 +2241,9 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
   /* ── PROCESO ── */
   .process {
     padding: 100px 60px;
-    background: #070706;
-    border-top: 1px solid rgba(212,168,67,0.08);
-    border-bottom: 1px solid rgba(212,168,67,0.08);
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
   .process-inner { max-width: 1280px; margin: 0 auto; }
   .process-header { text-align: center; margin-bottom: 56px; }
@@ -2346,9 +2339,9 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
   .cta-band {
     padding: 72px 60px;
     text-align: center;
-    border-top: 1px solid rgba(212,168,67,0.08);
-    border-bottom: 1px solid rgba(212,168,67,0.08);
-    background: #060605;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--dark-band);
   }
   .cta-band-title {
     font-family: 'Cormorant Garamond', serif;
@@ -2534,7 +2527,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
                           grid-template-columns: 76px 1fr;
                           column-gap: 16px;
                           text-align: left;
-                          border-bottom: 1px solid rgba(212,168,67,0.08); }
+                          border-bottom: 1px solid var(--border); }
     .client-logo-card:last-child { border-bottom: none; }
     .client-logo-wrap   { grid-column: 1; grid-row: 1/4;
                           align-self: center; width: 76px; height: auto; margin: 0; }
@@ -2547,7 +2540,7 @@ src="https://www.facebook.com/tr?id=2053319418722849&ev=PageView&noscript=1"></n
     .contact-grid { grid-template-columns: 1fr; gap: 36px; }
     .contact-details { gap: 0; }
     .contact-item { padding: 16px 0;
-                    border-bottom: 1px solid rgba(212,168,67,0.08); }
+                    border-bottom: 1px solid var(--border); }
     .contact-item:last-child { border-bottom: none; }
     .contact-item-text { font-size: 15px; }
 
